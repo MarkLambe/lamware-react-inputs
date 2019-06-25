@@ -1,0 +1,249 @@
+/*
+Form classes
+*/
+
+.LRI-form-page {
+    margin-left: 50px;
+    margin-bottom: 100px;
+    --main-color: blueviolet;
+    --error-color: #FF4040;
+    --success-color: #00C781;
+    --input-background-1:#ACACAC;
+    --input-background-2: #EEE;
+    --text-color: #333;
+}
+
+.LRI-form {
+    margin-top: 50px;
+    display: grid;
+    grid-template-columns: 100%;
+    grid-gap: 50px;
+}
+
+.LRI-form-header {
+    margin-top: 35px;
+    font-size: 250%;
+}
+
+.LRI-form-row {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 30% 20px 1fr;
+    grid-gap: 20px;
+    grid-template-rows: auto;
+}
+
+.LRI-form-field {
+    display: grid;
+    grid-template-rows: 30px 1fr;
+    min-width: 300px;
+}
+
+.LRI-form-field-header {
+    font-size: 120%;
+}
+
+.LRI-form-field-content {
+    height: 100%;
+}
+
+.LRI-validated-check {
+    height: 50%;
+    display: flex;
+    align-self: end;
+    font-size: 250%;
+}
+
+.LRI-validated-check-failed {
+    color: var(--error-color);
+}
+
+.LRI-validated-check-passed {
+    color: var(--success-color);
+}
+
+.LRI-form-error-section {
+    padding-left: 30px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    color: var(--error-color);
+}
+
+/* Text Input */
+.LRI-input {
+    padding: 0px 10px;
+    height: 50px;
+    border: none;
+    border-bottom: 1px solid var(--input-background-1);;
+    color: var(--text-color);
+    font-size: 125%;
+    border-top-left-radius: 3px;
+    border-top-right-radius: 3px;
+}
+
+.LRI-input:hover {
+    background-color: var(--input-background-2);
+}
+
+.LRI-input:focus {
+    background-color: var(--input-background-2);
+    border-bottom: 2px solid var(--main-color);
+}
+
+/* Select Input */
+.LRI-select-list {
+    color: var(--text-color);
+    background-color: var(--input-background-2);
+    overflow: scroll;
+    max-height: 300px;
+    position: absolute;
+    min-width: 150px;
+    z-index: 3;
+}
+
+.LRI-select-list :hover {
+    cursor: pointer;
+}
+
+.LRI-select-option {
+    font-size: 125%;
+    line-height: 150%;
+    margin: 0px 10px;
+}
+
+/* Common Radio and Checkbox ('checkable') classes */
+.LRI-checkable-section {
+    margin-top: 10px;
+    display: grid;
+    grid-template-columns: 100%;
+    grid-template-rows: auto;
+    grid-gap: 10px;
+    margin-left: 50px;
+}
+
+.LRI-checkable-option input[type="radio"]{
+    display: none;
+}
+
+.LRI-checkable-option input[type="checkbox"]{
+    display: none;
+}
+
+.LRI-checkable-option label {
+    position: relative;
+}
+
+.LRI-checkable-option span::before,
+.LRI-checkable-option span::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  margin: auto;
+}
+
+.LRI-checkable-option span.LRI-radio:hover {
+    cursor: pointer;
+}
+
+/* Radio Input */
+
+.LRI-checkable-option span.LRI-radio::before {
+    left: -52px;
+    width: 24px;
+    height: 24px;
+    background-color: var(--input-background-2);
+    border-radius: 50px;
+    transition: background-color .25s;
+}
+
+.LRI-checkable-option span.LRI-radio::after {
+    left: -48px;
+    width: 16px;
+    height: 16px;
+    border-radius: 10px;
+    background-color: var(--input-background-1);
+    transition: background-color .25s;
+}
+
+input[type="radio"]:checked + label span.LRI-radio::before {
+    background-color: var(--main-color);
+}
+
+input[type="radio"]:checked + label span.LRI-radio::after {
+    background-color: var(--input-background-2);
+}
+
+/* Checkbox Input */
+
+
+.LRI-checkable-option span.LRI-checkbox::before {
+    left: -52px;
+    width: 24px;
+    height: 24px;
+    background-color: var(--input-background-1);
+    border-radius: 5px;
+    transition: background-color .25s;
+}
+
+.LRI-checkable-option span.LRI-checkbox::after {
+    left: -49px;
+    width: 18px;
+    height: 18px;
+    border-radius: 5px;
+    background-color: var(--input-background-2);
+    transition: background-color .25s;
+}
+
+input[type="checkbox"]:checked + label span.LRI-checkbox::before {
+    background-color: var(--main-color);
+}
+
+input[type="checkbox"]:checked + label span.LRI-checkbox::after {
+    color: var(--main-color);
+    font-weight: bold;
+    content: ' ✓';
+    text-align: center;
+}
+
+/* Button */
+.LRI-button {
+    background-color: white;
+    border: none;
+    color: var(--main-color);
+    padding: 10px 25px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    border-radius: 10px;
+    border: 2px solid var(--main-color);
+}
+
+.LRI-button:hover {
+    background-color: var(--main-color);
+    color: white;
+    cursor: pointer;
+}
+
+/* Datepicker */
+.LRI-datepicker-button {
+    background-color: white;
+    border: none;
+    color: var(--main-color);
+    padding: 5px 30px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    border: 1px solid var(--main-color);
+}
+
+.LRI-datepicker-button:hover {
+    background-color: var(--main-color);
+    color: white;
+    cursor: pointer;
+}
