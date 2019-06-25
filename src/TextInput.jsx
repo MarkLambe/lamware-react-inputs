@@ -21,21 +21,29 @@ class TextInput extends React.Component {
         this.props.onChange(this.props.name, value);
     }
 
-
-    render() {
-        const value = this.props.value;
-
-        let errorMarkup = [];
-        this.state.errors.forEach((e) => errorMarkup.push(<li key={e}>{e}</li>));
-        let validatedCheckClass = "LRI-validated-check";
-        if(value.length !== 0){
+    getValidationMarkup() {
+        if(this.props.value && this.props.value.length !== 0){
             if(this.state.errors.length > 0){
-                validatedCheckClass += " LRI-validated-check-failed";
+                return (
+                    <span className="LRI-validated-check-failed">
+                        ✕
+                    </span>
+                )
             }
             else{
-                validatedCheckClass += " LRI-validated-check-passed";
+                return (
+                    <span className="LRI-validated-check-passed">
+                        ✓
+                    </span>
+                )
             }
         }
+    }
+
+    render() {
+        let errorMarkup = [];
+        this.state.errors.forEach((e) => errorMarkup.push(<li key={e}>{e}</li>));
+        
         return (
             <div className="LRI-form-row">
                 <div className="LRI-form-field">
@@ -46,14 +54,14 @@ class TextInput extends React.Component {
                         <input 
                             name={this.props.name} 
                             onChange={this.handleChange}
-                            value={value}
+                            value={this.props.value}
                             className="LRI-input"
                             placeholder={this.props.label}
                         />
                     </div>
                 </div>
-                <div className={validatedCheckClass}>
-
+                <div className="LRI-validated-check">
+                    { this.getValidationMarkup() }
                 </div>
                 <div className="LRI-form-error-section">
                     { errorMarkup }

@@ -43,13 +43,17 @@ class Radio extends React.Component {
         return markup;
     }
 
-    render() {
-        const value = this.props.value;
-
-        let validatedCheckClass = "LRI-validated-check";
-        if(value){
-            validatedCheckClass += " LRI-validated-check-passed";
+    getValidationMarkup() {
+        if(this.props.value){
+            return (
+                <span className="LRI-validated-check-passed">
+                    ✓
+                </span>
+            )
         }
+    }
+
+    render() {
         return (
             <div className="LRI-form-row">
                 <div className="LRI-form-field">
@@ -60,11 +64,11 @@ class Radio extends React.Component {
                         { this.getRadioMarkup() }
                     </div>
                 </div>
-                <div className={validatedCheckClass}>
-
+                <div className="LRI-validated-check">
+                    { this.getValidationMarkup() }
                 </div>
                 <div className="LRI-form-error-section">
-                    
+
                 </div>
             </div>
         );

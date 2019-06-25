@@ -105,16 +105,27 @@ class Select extends React.Component {
         }
     }
 
+    getValidationMarkup() {
+        if(this.state.errors.length > 0){
+            return (
+                <span className="LRI-validated-check-failed">
+                    ✕
+                </span>
+            )
+        }
+        else if (this.state.value.length > 0){
+            return (
+                <span className="LRI-validated-check-passed">
+                    ✓
+                </span>
+            )
+        }
+    }
+
     render() {
         let errorMarkup = [];
         this.state.errors.forEach((e) => errorMarkup.push(<li key={e}>{e}</li>));
-        let validatedCheckClass = "LRI-validated-check";
-        if(this.state.errors.length > 0){
-            validatedCheckClass += " LRI-validated-check-failed";
-        }
-        else if (this.state.value.length > 0){
-            validatedCheckClass += " LRI-validated-check-passed";
-        }
+
         return (
             <div className="LRI-form-row">
                 <div className="LRI-form-field">
@@ -133,8 +144,8 @@ class Select extends React.Component {
                         { this.getListMarkup() }
                     </div>
                 </div>
-                <div className={validatedCheckClass}>
-
+                <div className="LRI-validated-check">
+                    { this.getValidationMarkup() }
                 </div>
                 <div className="LRI-form-error-section">
                     { errorMarkup }

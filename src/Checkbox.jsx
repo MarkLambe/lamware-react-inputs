@@ -18,7 +18,6 @@ class Checkbox extends React.Component {
     render() {
         const value = this.props.value;
 
-        let validatedCheckClass = "LRI-validated-check";
         return (
             <div className="LRI-form-row">
                 <div className="LRI-form-field">
@@ -40,7 +39,7 @@ class Checkbox extends React.Component {
                         </div>
                     </div>
                 </div>
-                <div className={validatedCheckClass}>
+                <div className="LRI-validated-check">
 
                 </div>
                 <div className="LRI-form-error-section">

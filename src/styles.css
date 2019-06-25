@@ -51,14 +51,15 @@ Form classes
     height: 50%;
     display: flex;
     align-self: end;
+    font-size: 250%;
 }
 
 .LRI-validated-check-failed {
-    background-color: var(--error-color);
+    color: var(--error-color);
 }
 
 .LRI-validated-check-passed {
-    background-color: var(--success-color);
+    color: var(--success-color);
 }
 
 .LRI-form-error-section {
