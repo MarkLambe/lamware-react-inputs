@@ -11,20 +11,21 @@ class App extends React.Component {
     super();
     this.state = {
         formData: {
-            text_input: {value: null, validation: {required: true, minLength: 4}, translation: 'Text Input'},
-            text_input_with_validation: {value: null, validation: {required: true}, translation: 'Text Input With Validation (Email)'},
-            select_from_strings: {value: null, validation: {required: true}, translation: 'Select From Strings'},
-            select_from_objects: {value: null, validation: {required: true}, translation: 'Select From Objects'},
-            radio_from_strings: {value: null, validation: {required: true}, translation: 'Radio From Strings'},
-            radio_from_objects: {value: null, validation: {required: true}, translation: 'Radio From Objects'},
+            text_input: {value: null, translation: 'Text Input'},
+            text_input_with_validation: {value: null, translation: 'Text Input With Validation (Email)'},
+            select_from_strings: {value: null, translation: 'Select From Strings'},
+            select_from_objects: {value: null, translation: 'Select From Objects'},
+            radio_from_strings: {value: null, translation: 'Radio From Strings'},
+            radio_from_objects: {value: null, translation: 'Radio From Objects'},
             checkbox: {value: null, translation: 'Checkbox'},
-            date: {value: null, validation: {required: true}, translation: 'Datepicker'},
+            date: {value: null, translation: 'Datepicker'},
         },
     };
 
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleInputChange = this.handleInputChange.bind(this);
     this.getSidebarMarkUp = this.getSidebarMarkUp.bind(this);
+    this.validateForm = this.validateForm.bind(this);
   }
 
   handleSubmit() {
@@ -69,24 +70,29 @@ class App extends React.Component {
     return markup;
   }
 
+  validateForm() {
+    return ['bad', 'worse'];
+  }
+
   render() {
     const {formData} = this.state;
     return (
       <div className="page-box">
         <div className="form-box">
-          <Form title="Demo!" onSubmit={this.handleSubmit} data={formData}>
+          <Form title="Demo!" validate={this.validateForm} onSubmit={this.handleSubmit}>
                 <TextInput 
                   label={formData.text_input.translation}
                   name="text_input"
                   value={formData.text_input.value}
-                  onChange={this.handleInputChange} />
+                  onChange={this.handleInputChange} 
+                  required />
 
                 <TextInput 
                   label="Text Input With Validation"
                   name="text_input_with_validation"
                   value={formData.text_input_with_validation.value}
                   onChange={this.handleInputChange} 
-                  validation={this.regexValidation} />
+                  validator={this.regexValidation} />
 
                 <Select
                   label={formData.select_from_strings.translation}

@@ -2,42 +2,72 @@ import React from 'react';
 import './styles.css';
 import { Button } from './index';
 
+const REQUIRED_VALIDATOR = (value) => value && value.length > 0 ? [] : ['required'];
 
 class Form extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {errors: []};
+        this.state = {
+            validationRules: {},
+            errors: {}, 
+            showErrors: false
+        };
+        
         this.handleSubmit = this.handleSubmit.bind(this);
+        this.getChildren = this.getChildren.bind(this);
+        this.updateFormAboutChange = this.updateFormAboutChange.bind(this);
         this.isFormValid = this.isFormValid.bind(this);
     }
     
+    componentDidMount() {
+        let validationRules = {};
+        let errors = [];
+        this.props.children.forEach((c) => {
+            validationRules[c.props.name] = [];
+            errors[c.props.name] = [];
+            if(c.props.required === true){
+                validationRules[c.props.name].push(REQUIRED_VALIDATOR);
+            }
+            if(c.props.validator){
+                validationRules[c.props.name].push(c.props.validator);
+            }
+        });
+        this.setState({validationRules});
+        this.setState({errors});
+    }
+
     handleSubmit(event) {
         event.preventDefault();
-        this.props.onSubmit();
+        let errors = this.props.validate();
+        if(errors.length > 0){
+            this.setState({errors, showErrors: true});
+        }
+        else{
+            this.onSubmit();
+        }
+    }
+
+    getChildren() {
+        const childrenWithRef = React.Children.map(this.props.children, child =>
+            React.cloneElement(child, { updateFormAboutChange: this.updateFormAboutChange, errors: this.state.errors[child.props.name] })
+        );
+      
+        return childrenWithRef;
+    }
+
+    updateFormAboutChange(name, value, onChange) {
+        let {errors} = this.state;
+        errors[name] = [];
+        this.state.validationRules[name].forEach((validator) => {
+            let res = validator(value);
+            errors[name] = errors[name].concat(res);
+        });
+        this.setState({errors});
+        onChange(name, value);
     }
 
     isFormValid() {
-        let errors = [];
-        this.props.children.forEach((child) => {
-            if(child.props.validation){
-                let value = this.props.data[child.props.name].value;
-                let label = this.props.data[child.props.name].translation || child.props.name;
-                console.log(child.props.validation);
-                console.log(typeof(child.props.validation));
-                if(typeof(child.props.validation === 'function')){
-                    errors.push(child.props.validation(value, child.props.name, label));
-                }
-                else if(typeof(child.props.validation) === 'object'){
-                    if(child.props.validation.required && (!value || value.length === 0)){
-                        errors.push(label + ' is required');
-                    }
-                    if(child.props.validation.minLength && value.length < child.props.validation.minLength){
-                        errors.push(label + ' is too short');
-                    }
-                }
-            }
-        });
-        return errors.length === 0;
+        return true;
     }
 
     render() {
@@ -48,9 +78,8 @@ class Form extends React.Component {
                 </div>
 
                 <form className="LRI-form" onSubmit={this.handleSubmit}>
-                    {this.props.children}
-
-                    <Button disabled={ !this.isFormValid() } />
+                    { this.getChildren() }
+                    <Button disabled={ this.isFormValid() }/>
                 </form>
             </div>
         );

@@ -247,3 +247,9 @@ input[type="checkbox"]:checked + label span.LRI-checkbox::after {
     color: white;
     cursor: pointer;
 }
+
+/* Errors */
+
+.LRI-error-section {
+    color: var(--error-color);
+}

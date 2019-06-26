@@ -5,45 +5,56 @@ import './styles.css';
 class TextInput extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {errors: []};
+        this.state = {isDirty: false};
         this.handleChange = this.handleChange.bind(this);
+        this.getValidationMarkup = this.getValidationMarkup.bind(this);
+        this.getErrorMarkup = this.getErrorMarkup.bind(this);
     }
     
     handleChange(e) {
         let value = e.target.value;
-        if(value.length !== 0 && this.props.validate){
-            let errors = this.props.validate(value);
-            this.setState({errors});
+        this.setState({isDirty: true});
+        if(this.props.updateFormAboutChange){
+            this.props.updateFormAboutChange(this.props.name, value, this.props.onChange)
         }
-        else{
-            this.setState({errors: []});
+        else {
+            this.props.onChange(this.props.name, value);
         }
-        this.props.onChange(this.props.name, value);
     }
 
     getValidationMarkup() {
-        if(this.props.value && this.props.value.length !== 0){
-            if(this.state.errors.length > 0){
-                return (
-                    <span className="LRI-validated-check-failed">
-                        ✕
-                    </span>
-                )
-            }
-            else{
-                return (
-                    <span className="LRI-validated-check-passed">
-                        ✓
-                    </span>
-                )
-            }
+        if(!this.state.isDirty || !this.props.errors) return;
+        
+        if(this.props.errors.length > 0){
+            return (
+                <span className="LRI-validated-check-failed">
+                    ✕
+                </span>
+            )
+        }
+        else{
+            return (
+                <span className="LRI-validated-check-passed">
+                    ✓
+                </span>
+            )
+        }
+    }
+
+    getErrorMarkup() {
+        if(!this.state.isDirty || !this.props.errors) return;
+        if(this.props.errors.length > 0){
+            let errorMarkup = [];
+            this.props.errors.forEach((e, i) => {
+                errorMarkup.push(
+                    <div key={i}> {e} </div>
+                );
+            });
+            return errorMarkup;
         }
     }
 
     render() {
-        let errorMarkup = [];
-        this.state.errors.forEach((e) => errorMarkup.push(<li key={e}>{e}</li>));
-        
         return (
             <div className="LRI-form-row">
                 <div className="LRI-form-field">
@@ -64,7 +75,7 @@ class TextInput extends React.Component {
                     { this.getValidationMarkup() }
                 </div>
                 <div className="LRI-form-error-section">
-                    { errorMarkup }
+                    { this.getErrorMarkup() }
                 </div>
             </div>
         );
