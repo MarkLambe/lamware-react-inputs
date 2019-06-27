@@ -28,7 +28,7 @@ Form classes
 .LRI-form-row {
     width: 100%;
     display: grid;
-    grid-template-columns: 30% 20px 1fr;
+    grid-template-columns: 30% 1fr;
     grid-gap: 20px;
     grid-template-rows: auto;
 }
@@ -45,13 +45,19 @@ Form classes
 
 .LRI-form-field-content {
     height: 100%;
+    position: relative;
+}
+
+.LRI-feedback-section {
+    display: grid;
+    grid-template-columns: 50px 1fr;
 }
 
 .LRI-validated-check {
     height: 50%;
     display: flex;
     align-self: end;
-    font-size: 250%;
+    font-size: 150%;
 }
 
 .LRI-validated-check-failed {
@@ -222,11 +228,22 @@ input[type="checkbox"]:checked + label span.LRI-checkbox::after {
     border: 2px solid var(--main-color);
 }
 
-.LRI-button:hover {
+.LRI-button:hover:enabled {
     background-color: var(--main-color);
     color: white;
     cursor: pointer;
 }
+
+.LRI-button:disabled,
+.LRI-button[disabled]{
+    color: var(--input-background-1);
+    border: 2px solid var(--input-background-1);
+}
+
+.LRI-button:hover:disabled {
+    cursor: not-allowed;
+}
+
 
 /* Datepicker */
 .LRI-datepicker-button {
@@ -246,4 +263,10 @@ input[type="checkbox"]:checked + label span.LRI-checkbox::after {
     background-color: var(--main-color);
     color: white;
     cursor: pointer;
+}
+
+/* Errors */
+
+.LRI-error-section {
+    color: var(--error-color);
 }

@@ -1,6 +1,7 @@
 import React from 'react';
 import './styles.css';
 import Datepicker from 'react-datepicker';
+import { getValidationFeedback } from './helpers'
 
 
 class CustomDatepickerInput extends React.Component {
@@ -19,7 +20,7 @@ class CustomDatepickerInput extends React.Component {
             <button
               className="LRI-datepicker-button"
               onClick={this.handleClick}>
-              {this.props.value}
+              {this.props.value || 'Select Date'}
             </button>
           )
     }
@@ -32,11 +33,15 @@ class LRIDatepicker extends React.Component {
     }
     
     handleChange(value) {
-        this.props.onChange(this.props.name, value);
+        if(this.props._hasLRIForm){
+            this.props._updateFormAboutChange(this.props.name, value, this.props.onChange)
+        }
+        else {
+            this.props.onChange(this.props.name, value);
+        }
     }
 
     render() {
-        let validatedCheckClass = "LRI-validated-check";
         return (
             <div className="LRI-form-row">
                 <div className="LRI-form-field">
@@ -46,16 +51,12 @@ class LRIDatepicker extends React.Component {
                     <div className="LRI-form-field-content">
                         <Datepicker
                             customInput={<CustomDatepickerInput />}
-                            dateFormat={ this.props.dateFormat || "dd / MMM / yyyy" }
+                            dateFormat={ this.props.dateFormat || "DD/MMM/YYYY" }
                             selected={this.props.value}
                             onChange={this.handleChange} />
                     </div>
                 </div>
-                <div className={validatedCheckClass}>
-
-                </div>
-                <div className="LRI-form-error-section">
-                </div>
+                { getValidationFeedback(this.props.showValidationMessages, this.props.errors) }
             </div>
         );
     }

@@ -1,6 +1,6 @@
 import React from 'react';
 import './styles.css';
-
+import { getValidationFeedback } from './helpers'
 
 class Checkbox extends React.Component {
     constructor(props) {
@@ -30,7 +30,7 @@ class Checkbox extends React.Component {
                                 id={this.props.name}
                                 type="checkbox" 
                                 name={this.props.name}
-                                value={value}
+                                checked={value || false}
                                 onChange={this.handleChange} />
                             <label 
                                 htmlFor={this.props.name}>
@@ -39,12 +39,7 @@ class Checkbox extends React.Component {
                         </div>
                     </div>
                 </div>
-                <div className="LRI-validated-check">
-
-                </div>
-                <div className="LRI-form-error-section">
-                    
-                </div>
+                { getValidationFeedback(this.props.showValidationMessages, this.props.errors) }
             </div>
         );
     }
