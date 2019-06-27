@@ -1,12 +1,12 @@
 import React from 'react';
 import './styles.css';
+import { getValidationFeedback } from './helpers'
 
 
 class Select extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            errors: [], 
             displayList: false,
             value: '',
             localOptions: null
@@ -60,9 +60,15 @@ class Select extends React.Component {
 
     optionSelected(selectedValue, selectedLabel) {
         this.setState({value: selectedLabel})
-        this.props.onChange(this.props.name, selectedValue);
+
+        if(this.props._hasLRIForm){
+            this.props._updateFormAboutChange(this.props.name, value, this.props.onChange)
+        }
+        else {
+            this.props.onChange(this.props.name, value);
+        }
+
         this.setState({displayList: false});
-        this.setState({errors: []});
     }
 
     getListMarkup() {
@@ -105,27 +111,7 @@ class Select extends React.Component {
         }
     }
 
-    getValidationMarkup() {
-        if(this.state.errors.length > 0){
-            return (
-                <span className="LRI-validated-check-failed">
-                    ✕
-                </span>
-            )
-        }
-        else if (this.state.value.length > 0){
-            return (
-                <span className="LRI-validated-check-passed">
-                    ✓
-                </span>
-            )
-        }
-    }
-
     render() {
-        let errorMarkup = [];
-        this.state.errors.forEach((e) => errorMarkup.push(<li key={e}>{e}</li>));
-
         return (
             <div className="LRI-form-row">
                 <div className="LRI-form-field">
@@ -144,12 +130,7 @@ class Select extends React.Component {
                         { this.getListMarkup() }
                     </div>
                 </div>
-                <div className="LRI-validated-check">
-                    { this.getValidationMarkup() }
-                </div>
-                <div className="LRI-form-error-section">
-                    { errorMarkup }
-                </div>
+                { getValidationFeedback(this.props.showValidationMessages, this.props.errors) }
             </div>
         );
     }

@@ -7,21 +7,9 @@ const REQUIRED_VALIDATOR = (value) => value && value.length > 0 ? [] : ['require
 class Form extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {
-            validationRules: {},
-            errors: {}, 
-            showErrors: false
-        };
-        
-        this.handleSubmit = this.handleSubmit.bind(this);
-        this.getChildren = this.getChildren.bind(this);
-        this.updateFormAboutChange = this.updateFormAboutChange.bind(this);
-        this.isFormValid = this.isFormValid.bind(this);
-    }
-    
-    componentDidMount() {
+
         let validationRules = {};
-        let errors = [];
+        let errors = {};
         this.props.children.forEach((c) => {
             validationRules[c.props.name] = [];
             errors[c.props.name] = [];
@@ -32,30 +20,61 @@ class Form extends React.Component {
                 validationRules[c.props.name].push(c.props.validator);
             }
         });
-        this.setState({validationRules});
-        this.setState({errors});
+
+        this.state = {
+            validationRules,
+            errors, 
+            showErrors: false,
+        };
+        
+        this.handleSubmit = this.handleSubmit.bind(this);
+        this.getChildren = this.getChildren.bind(this);
+        this.updateFormAboutChange = this.updateFormAboutChange.bind(this);
+        this.isFormValid = this.isFormValid.bind(this);
+        this.getNewProps = this.getNewProps.bind(this);
+        this.updateErrors = this.updateErrors.bind(this);
+        this.getErrorsForChild = this.getErrorsForChild.bind(this);
+    }
+
+    componentDidMount(){
+        React.Children.forEach(this.props.children, child => {
+            this.updateErrors(child.props.name, child.props.value);
+        });
     }
 
     handleSubmit(event) {
         event.preventDefault();
-        let errors = this.props.validate();
-        if(errors.length > 0){
-            this.setState({errors, showErrors: true});
+        if(this.isFormValid()){
+            this.setState({showErrors: false});
+            this.props.onSubmit();
         }
         else{
-            this.onSubmit();
+            this.setState({showErrors: true});
         }
+        
     }
 
     getChildren() {
         const childrenWithRef = React.Children.map(this.props.children, child =>
-            React.cloneElement(child, { updateFormAboutChange: this.updateFormAboutChange, errors: this.state.errors[child.props.name] })
+            React.cloneElement(child, this.getNewProps(child))
         );
-      
         return childrenWithRef;
     }
 
-    updateFormAboutChange(name, value, onChange) {
+    getErrorsForChild(childName) {
+        return this.state.showErrors ?  this.state.errors[childName] : [];
+    }
+
+    getNewProps(child) {
+        return { 
+            _hasLRIForm: true,
+            _updateFormAboutChange: this.updateFormAboutChange, 
+            errors: this.getErrorsForChild(child.props.name),
+            showValidationMessages: this.state.showErrors
+        }
+    }
+
+    updateErrors(name, value){
         let {errors} = this.state;
         errors[name] = [];
         this.state.validationRules[name].forEach((validator) => {
@@ -63,11 +82,19 @@ class Form extends React.Component {
             errors[name] = errors[name].concat(res);
         });
         this.setState({errors});
+    }
+
+    updateFormAboutChange(name, value, onChange) {
+        this.updateErrors(name, value);
         onChange(name, value);
     }
 
     isFormValid() {
-        return true;
+        let isValid = true;
+        Object.keys(this.state.errors).forEach((k) => {
+            if(this.state.errors[k].length > 0) isValid = false;
+        });
+        return isValid;
     }
 
     render() {
@@ -79,7 +106,7 @@ class Form extends React.Component {
 
                 <form className="LRI-form" onSubmit={this.handleSubmit}>
                     { this.getChildren() }
-                    <Button disabled={ this.isFormValid() }/>
+                    <Button disabled={ !this.isFormValid() && this.state.showErrors }/>
                 </form>
             </div>
         );

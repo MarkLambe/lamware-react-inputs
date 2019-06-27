@@ -40,13 +40,16 @@ class App extends React.Component {
 
   regexValidation(value) {
     let errors = [];
-        if(value.length < 3){
-            errors.push('Too Short');
-        }
-        else if(!value.match(EMAIL_REGEX)){
-            errors.push("Not a valid email")
-        }
-        return errors;
+    if(value === null){
+      errors.push('*');
+    }
+    else if(value.length < 3){
+        errors.push('Too Short');
+    }
+    else if(!value.match(EMAIL_REGEX)){
+        errors.push("Not a valid email")
+    }
+    return errors;
   }
 
   getSidebarMarkUp() {

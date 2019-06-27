@@ -1,56 +1,20 @@
 import React from 'react';
 import './styles.css';
-
+import { getValidationFeedback } from './helpers'
 
 class TextInput extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {isDirty: false};
         this.handleChange = this.handleChange.bind(this);
-        this.getValidationMarkup = this.getValidationMarkup.bind(this);
-        this.getErrorMarkup = this.getErrorMarkup.bind(this);
     }
     
     handleChange(e) {
         let value = e.target.value;
-        this.setState({isDirty: true});
-        if(this.props.updateFormAboutChange){
-            this.props.updateFormAboutChange(this.props.name, value, this.props.onChange)
+        if(this.props._hasLRIForm){
+            this.props._updateFormAboutChange(this.props.name, value, this.props.onChange)
         }
         else {
             this.props.onChange(this.props.name, value);
-        }
-    }
-
-    getValidationMarkup() {
-        if(!this.state.isDirty || !this.props.errors) return;
-        
-        if(this.props.errors.length > 0){
-            return (
-                <span className="LRI-validated-check-failed">
-                    ✕
-                </span>
-            )
-        }
-        else{
-            return (
-                <span className="LRI-validated-check-passed">
-                    ✓
-                </span>
-            )
-        }
-    }
-
-    getErrorMarkup() {
-        if(!this.state.isDirty || !this.props.errors) return;
-        if(this.props.errors.length > 0){
-            let errorMarkup = [];
-            this.props.errors.forEach((e, i) => {
-                errorMarkup.push(
-                    <div key={i}> {e} </div>
-                );
-            });
-            return errorMarkup;
         }
     }
 
@@ -71,12 +35,7 @@ class TextInput extends React.Component {
                         />
                     </div>
                 </div>
-                <div className="LRI-validated-check">
-                    { this.getValidationMarkup() }
-                </div>
-                <div className="LRI-form-error-section">
-                    { this.getErrorMarkup() }
-                </div>
+                { getValidationFeedback(this.props.showValidationMessages, this.props.errors) }
             </div>
         );
     }
