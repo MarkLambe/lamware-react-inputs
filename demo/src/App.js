@@ -41,7 +41,7 @@ class App extends React.Component {
   regexValidation(value) {
     let errors = [];
     if(value === null){
-      errors.push('*');
+      errors.push('Required');
     }
     else if(value.length < 3){
         errors.push('Too Short');
@@ -111,7 +111,8 @@ class App extends React.Component {
                   value={formData.select_from_objects.value}
                   onChange={this.handleInputChange} 
                   valueKey="id"
-                  labelKey="name" />
+                  labelKey="name"
+                  required />
 
                 <Radio
                   label={formData.radio_from_strings.translation}
@@ -127,7 +128,8 @@ class App extends React.Component {
                   onChange={this.handleInputChange}
                   options={OPTION_OBJECTS}
                   valueKey="id"
-                  labelKey="name" />
+                  labelKey="name" 
+                  required/>
 
                 <Checkbox
                   label={formData.checkbox.translation}
@@ -139,7 +141,8 @@ class App extends React.Component {
                   label={formData.date.translation}
                   name="date"
                   value={formData.date.value}
-                  onChange={this.handleInputChange} />
+                  onChange={this.handleInputChange} 
+                  required />
 
           </Form>
         </div>

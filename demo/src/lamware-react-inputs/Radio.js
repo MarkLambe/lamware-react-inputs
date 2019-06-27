@@ -1,6 +1,6 @@
 import React from 'react';
 import './styles.css';
-
+import { getValidationFeedback } from './helpers'
 
 class Radio extends React.Component {
     constructor(props) {
@@ -12,7 +12,13 @@ class Radio extends React.Component {
     handleChange(e) {
         let value = e.target.value;
         this.setState({value});
-        this.props.onChange(this.props.name, value);
+
+        if(this.props._hasLRIForm){
+            this.props._updateFormAboutChange(this.props.name, value, this.props.onChange)
+        }
+        else {
+            this.props.onChange(this.props.name, value);
+        }
     }
 
     getRadioMarkup() {
@@ -43,16 +49,6 @@ class Radio extends React.Component {
         return markup;
     }
 
-    getValidationMarkup() {
-        if(this.props.value){
-            return (
-                <span className="LRI-validated-check-passed">
-                    ✓
-                </span>
-            )
-        }
-    }
-
     render() {
         return (
             <div className="LRI-form-row">
@@ -64,12 +60,7 @@ class Radio extends React.Component {
                         { this.getRadioMarkup() }
                     </div>
                 </div>
-                <div className="LRI-validated-check">
-                    { this.getValidationMarkup() }
-                </div>
-                <div className="LRI-form-error-section">
-
-                </div>
+                { getValidationFeedback(this.props.showValidationMessages, this.props.errors) }
             </div>
         );
     }

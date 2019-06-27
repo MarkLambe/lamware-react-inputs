@@ -40,10 +40,10 @@ class Select extends React.Component {
             else if(typeof(o) === 'string'){
                 value = label = o;
             }
-            if(value === nextProps.value){
+            if(String(value) === String(nextProps.value)){
                 localVal = label;
             }
-            localOptions[label] = value;
+            localOptions[value] = label;
         });
         this.setState({localOptions});
         this.setState({value: localVal});
@@ -62,10 +62,10 @@ class Select extends React.Component {
         this.setState({value: selectedLabel})
 
         if(this.props._hasLRIForm){
-            this.props._updateFormAboutChange(this.props.name, value, this.props.onChange)
+            this.props._updateFormAboutChange(this.props.name, selectedValue, this.props.onChange)
         }
         else {
-            this.props.onChange(this.props.name, value);
+            this.props.onChange(this.props.name, selectedValue);
         }
 
         this.setState({displayList: false});
@@ -78,10 +78,10 @@ class Select extends React.Component {
         let optionsList = [];
 
         Object.keys(this.state.localOptions).forEach((k) => {
-            if(this.state.value === null || this.state.value.length === 0 || k.toUpperCase().includes(this.state.value.toUpperCase())){
+            if(this.state.value === null || this.state.value.length === 0 || this.state.localOptions[k].toUpperCase().includes(this.state.value.toUpperCase())){
                 optionsList.push(
-                    <div key={k} className="LRI-select-option" onClick={() => this.optionSelected(this.state.localOptions[k], k)}> 
-                        {k} 
+                    <div key={k} className="LRI-select-option" onClick={() => this.optionSelected(k, this.state.localOptions[k])}> 
+                        {this.state.localOptions[k]} 
                     </div>
                 )
             }
@@ -101,13 +101,8 @@ class Select extends React.Component {
     handleClick(e){
         if (this.optionsBoxRef && !this.optionsBoxRef.contains(e.target)) {
             this.setState({displayList: false});
-        }
-        if(this.state.value.length > 0){
-            let isValueCorrect = Object.keys(this.state.localOptions).find((k) => k === this.state.value) !== undefined;
-
-            if(isValueCorrect === false){
-                this.setState({errors: ['This value is not an option.']});
-            }
+            let val = this.props.value ? this.state.localOptions[this.props.value] : '';
+            this.setState({value: val});
         }
     }
 

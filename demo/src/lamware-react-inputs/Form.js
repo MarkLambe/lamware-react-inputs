@@ -2,7 +2,8 @@ import React from 'react';
 import './styles.css';
 import { Button } from './index';
 
-const REQUIRED_VALIDATOR = (value) => value && value.length > 0 ? [] : ['required'];
+const required_validator = (value) => value && (typeof(value) !== 'string' || value.length > 0) ? [] : ['Value is required'];
+const options_validator = (value, options) =>  value && options.includes(value) ? [] : ['Invalid option'];
 
 class Form extends React.Component {
     constructor(props) {
@@ -14,7 +15,12 @@ class Form extends React.Component {
             validationRules[c.props.name] = [];
             errors[c.props.name] = [];
             if(c.props.required === true){
-                validationRules[c.props.name].push(REQUIRED_VALIDATOR);
+                validationRules[c.props.name].push(required_validator);
+                if(c.props.options){
+                    let options = c.props.options.map((o) => typeof(o) === 'string' ? o : String(o[c.props.valueKey || 'pk']));
+                    let f = (v) => options_validator(v, options);
+                    validationRules[c.props.name].push(f);
+                }
             }
             if(c.props.validator){
                 validationRules[c.props.name].push(c.props.validator);

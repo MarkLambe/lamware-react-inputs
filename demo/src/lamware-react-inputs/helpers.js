@@ -33,7 +33,7 @@ function getErrorMarkup(showValidationMessages, errors) {
 
 export function getValidationFeedback(showValidationMessages, errors) {
     return (
-        <div>
+        <div className="LRI-feedback-section">
             <div className="LRI-validated-check">
                 { getValidationMarkup(showValidationMessages, errors) }
             </div>
