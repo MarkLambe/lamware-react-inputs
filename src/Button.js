@@ -45,5 +45,9 @@ class Button extends React.Component {
     }
 }
 
+Button.defaultProps = {
+    _isLRIElement: true
+};
+
 export default Button
 

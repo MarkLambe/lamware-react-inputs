@@ -10,14 +10,14 @@ It provides customised TextInput, Select, Radio, Button, Form, Checkbox, and Dat
 The package can be installed via NPM:
 
 ```
-npm install react-datepicker --save
+npm install lamware-react-inputs --save
 ```
 
 Example:
 
 At the moment inputs require use of a form. Here's a simple example, two text inputs, one with custom validation:
 
-```
+```js
 import React from "react";
 import { Form, TextInput } from 'lamware-react-inputs';
 

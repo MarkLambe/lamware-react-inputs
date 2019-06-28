@@ -131,4 +131,8 @@ class Select extends React.Component {
     }
 }
 
+Select.defaultProps = {
+    _isLRIElement: true
+};
+
 export default Select

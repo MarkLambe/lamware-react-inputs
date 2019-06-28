@@ -51,7 +51,7 @@ class LRIDatepicker extends React.Component {
                     <div className="LRI-form-field-content">
                         <Datepicker
                             customInput={<CustomDatepickerInput />}
-                            dateFormat={ this.props.dateFormat || "DD/MMM/YYYY" }
+                            dateFormat={ this.props.dateFormat || 'dd/MMM/yyyy' }
                             selected={this.props.value}
                             onChange={this.handleChange} />
                     </div>
@@ -61,5 +61,9 @@ class LRIDatepicker extends React.Component {
         );
     }
 }
+
+LRIDatepicker.defaultProps = {
+    _isLRIElement: true
+};
 
 export default LRIDatepicker;

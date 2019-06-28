@@ -66,5 +66,9 @@ class Radio extends React.Component {
     }
 }
 
+Radio.defaultProps = {
+    _isLRIElement: true
+};
+
 export default Radio
 

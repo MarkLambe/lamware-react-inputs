@@ -25,7 +25,7 @@ class App extends React.Component {
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleInputChange = this.handleInputChange.bind(this);
     this.getSidebarMarkUp = this.getSidebarMarkUp.bind(this);
-    this.validateForm = this.validateForm.bind(this);
+    this.getConditionallyRenderedMarkup = this.getConditionallyRenderedMarkup.bind(this);
   }
 
   handleSubmit() {
@@ -64,7 +64,7 @@ class App extends React.Component {
         value = 'null';
       }
       else if(typeof(value) === 'object'){
-        value =value.format('DD/MM/YYYY');
+        value =value.format('dd/MM/yyyy');
       }
       markup.push(
         <div key={o} className="sidebar-line">{name} -> {value}</div>
@@ -73,8 +73,17 @@ class App extends React.Component {
     return markup;
   }
 
-  validateForm() {
-    return ['bad', 'worse'];
+  getConditionallyRenderedMarkup() {
+    if(this.state.formData.checkbox.value){
+      return (
+        <Datepicker
+          label={this.state.formData.date.translation}
+          name="date"
+          value={this.state.formData.date.value}
+          onChange={this.handleInputChange} 
+          required />
+      );
+    }
   }
 
   render() {
@@ -96,6 +105,8 @@ class App extends React.Component {
                   value={formData.text_input_with_validation.value}
                   onChange={this.handleInputChange} 
                   validator={this.regexValidation} />
+
+                <span>asd</span>
 
                 <Select
                   label={formData.select_from_strings.translation}
@@ -132,17 +143,13 @@ class App extends React.Component {
                   required/>
 
                 <Checkbox
-                  label={formData.checkbox.translation}
+                  label={this.state.formData.checkbox.translation}
                   onChange={this.handleInputChange}
-                  value={formData.checkbox.value}
+                  value={this.state.formData.checkbox.value}
                   name="checkbox" />
 
-                <Datepicker
-                  label={formData.date.translation}
-                  name="date"
-                  value={formData.date.value}
-                  onChange={this.handleInputChange} 
-                  required />
+                { this.getConditionallyRenderedMarkup() }
+
 
           </Form>
         </div>

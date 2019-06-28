@@ -45,5 +45,9 @@ class Checkbox extends React.Component {
     }
 }
 
+Checkbox.defaultProps = {
+    _isLRIElement: true
+};
+
 export default Checkbox
 

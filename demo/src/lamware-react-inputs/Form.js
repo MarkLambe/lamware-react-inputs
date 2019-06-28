@@ -1,6 +1,7 @@
 import React from 'react';
 import './styles.css';
 import { Button } from './index';
+import { getLRIChildren } from './helpers'
 
 const required_validator = (value) => value && (typeof(value) !== 'string' || value.length > 0) ? [] : ['Value is required'];
 const options_validator = (value, options) =>  value && options.includes(value) ? [] : ['Invalid option'];
@@ -11,20 +12,9 @@ class Form extends React.Component {
 
         let validationRules = {};
         let errors = {};
-        this.props.children.forEach((c) => {
-            validationRules[c.props.name] = [];
+        getLRIChildren(this.props.children).forEach((c) => {
+            validationRules[c.props.name] = this.getValidationForChild(c);
             errors[c.props.name] = [];
-            if(c.props.required === true){
-                validationRules[c.props.name].push(required_validator);
-                if(c.props.options){
-                    let options = c.props.options.map((o) => typeof(o) === 'string' ? o : String(o[c.props.valueKey || 'pk']));
-                    let f = (v) => options_validator(v, options);
-                    validationRules[c.props.name].push(f);
-                }
-            }
-            if(c.props.validator){
-                validationRules[c.props.name].push(c.props.validator);
-            }
         });
 
         this.state = {
@@ -40,12 +30,29 @@ class Form extends React.Component {
         this.getNewProps = this.getNewProps.bind(this);
         this.updateErrors = this.updateErrors.bind(this);
         this.getErrorsForChild = this.getErrorsForChild.bind(this);
+        this.getValidationForChild = this.getValidationForChild.bind(this);
     }
 
     componentDidMount(){
-        React.Children.forEach(this.props.children, child => {
+        getLRIChildren(this.props.children).forEach((child) => {
             this.updateErrors(child.props.name, child.props.value);
         });
+    }
+
+    getValidationForChild(child) {
+        let rules = [];
+        if(child.props.required === true){
+            rules.push(required_validator);
+            if(child.props.options){
+                let options = child.props.options.map((o) => typeof(o) === 'string' ? o : String(o[child.props.valueKey || 'pk']));
+                let f = (v) => options_validator(v, options);
+                rules.push(f);
+            }
+        }
+        if(child.props.validator){
+            rules.push(child.props.validator);
+        }
+        return rules;
     }
 
     handleSubmit(event) {
@@ -61,10 +68,11 @@ class Form extends React.Component {
     }
 
     getChildren() {
-        const childrenWithRef = React.Children.map(this.props.children, child =>
-            React.cloneElement(child, this.getNewProps(child))
-        );
-        return childrenWithRef;
+        return React.Children.map(this.props.children, (child) => {
+            if(child){
+                return React.cloneElement(child, this.getNewProps(child))
+            }
+        });
     }
 
     getErrorsForChild(childName) {
@@ -72,11 +80,30 @@ class Form extends React.Component {
     }
 
     getNewProps(child) {
-        return { 
-            _hasLRIForm: true,
-            _updateFormAboutChange: this.updateFormAboutChange, 
-            errors: this.getErrorsForChild(child.props.name),
-            showValidationMessages: this.state.showErrors
+        let newProps = {};
+        if(child && child.props && child.props._isLRIElement){
+            newProps = { 
+                _hasLRIForm: true,
+                _updateFormAboutChange: this.updateFormAboutChange, 
+                errors: this.getErrorsForChild(child.props.name),
+                showValidationMessages: this.state.showErrors
+            }
+        }
+        return newProps;
+    }
+
+    componentWillReceiveProps(nextProps) {
+        let { validationRules } = this.state;
+        let update = false;
+        getLRIChildren(nextProps.children).forEach((child) => {
+            if(!this.state.validationRules[child.name]){
+                validationRules[child.props.name] = this.getValidationForChild(child);
+                this.updateErrors(child.props.name, child.props.value);
+                update = true;
+            }
+        });
+        if(update){
+            this.setState(validationRules);
         }
     }
 

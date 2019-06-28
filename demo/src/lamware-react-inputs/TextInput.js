@@ -41,4 +41,8 @@ class TextInput extends React.Component {
     }
 }
 
+TextInput.defaultProps = {
+    _isLRIElement: true
+};
+
 export default TextInput;
