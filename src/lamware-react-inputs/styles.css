@@ -3,7 +3,7 @@ Form classes
 */
 
 .LRI-form-page {
-    margin-left: 50px;
+    margin: 0% 5%;
     margin-bottom: 100px;
     --main-color: blueviolet;
     --error-color: #FF4040;
@@ -28,15 +28,15 @@ Form classes
 .LRI-form-row {
     width: 100%;
     display: grid;
-    grid-template-columns: 30% 1fr;
+    grid-template-columns: auto 1fr;
     grid-gap: 20px;
     grid-template-rows: auto;
 }
 
 .LRI-form-field {
+    width: auto;
     display: grid;
     grid-template-rows: 30px 1fr;
-    min-width: 300px;
 }
 
 .LRI-form-field-header {
@@ -54,9 +54,10 @@ Form classes
 }
 
 .LRI-validated-check {
-    height: 50%;
+    height: 100%;
     display: flex;
-    align-self: end;
+    align-items: flex-end;
+    justify-content: center;
     font-size: 150%;
 }
 
@@ -74,6 +75,21 @@ Form classes
     flex-direction: column;
     justify-content: flex-end;
     color: var(--error-color);
+}
+
+@media only screen and (max-width: 800px) {
+    .LRI-form-row {
+        width: 100%;
+        display: grid;
+        grid-template-rows: auto auto;
+        grid-template-columns: 100%;
+        grid-gap: 10px;
+    }
+
+    .LRI-feedback-section {
+        height: 25px;
+        margin-top: 5px;
+    }
 }
 
 /* Text Input */

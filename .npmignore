@@ -1,5 +1,6 @@
 /src
-/demo
+/__tests__
+/__mocks__
 .DS_Store
 .babelrc
 webpack.config.js

@@ -64,7 +64,11 @@ class App extends React.Component {
         value = 'null';
       }
       else if(typeof(value) === 'object'){
-        value =value.format('dd/MM/yyyy');
+        value = new Intl.DateTimeFormat('en-IE', { 
+          year: 'numeric', 
+          month: 'long', 
+          day: '2-digit' 
+      }).format(new Date(value));
       }
       markup.push(
         <div key={o} className="sidebar-line">{name} -> {value}</div>
@@ -106,7 +110,7 @@ class App extends React.Component {
                   onChange={this.handleInputChange} 
                   validator={this.regexValidation} />
 
-                <span>asd</span>
+                <span>Other form children, like text, are still rendered like this.</span>
 
                 <Select
                   label={formData.select_from_strings.translation}
