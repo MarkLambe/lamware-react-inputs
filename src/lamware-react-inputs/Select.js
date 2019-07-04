@@ -121,7 +121,7 @@ class Select extends React.Component {
                             placeholder={'Search for ' + this.props.label}
                             onFocus={ this.onFocus }
                             onChange={this.handleChange}
-                        />
+                            disabled={this.props.disabled || false} />
                         { this.getListMarkup() }
                     </div>
                 </div>

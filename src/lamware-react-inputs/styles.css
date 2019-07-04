@@ -104,7 +104,7 @@ Form classes
     border-top-right-radius: 3px;
 }
 
-.LRI-input:hover {
+.LRI-input:hover:enabled {
     background-color: var(--input-background-2);
 }
 
@@ -113,6 +113,9 @@ Form classes
     border-bottom: 2px solid var(--main-color);
 }
 
+.LRI-input:hover:disabled {
+    cursor: not-allowed;
+}
 /* Select Input */
 .LRI-select-list {
     color: var(--text-color);
@@ -197,6 +200,13 @@ input[type="radio"]:checked + label span.LRI-radio::after {
     background-color: var(--input-background-2);
 }
 
+input[type="radio"]:disabled + label span.LRI-radio::before {
+    cursor: not-allowed;
+}
+
+input[type="radio"]:disabled + label span.LRI-radio::after {
+    cursor: not-allowed;
+}
 /* Checkbox Input */
 
 
@@ -227,6 +237,14 @@ input[type="checkbox"]:checked + label span.LRI-checkbox::after {
     font-weight: bold;
     content: ' ✓';
     text-align: center;
+}
+
+input[type="checkbox"]:disabled + label span.LRI-checkbox::before {
+    cursor: not-allowed;
+}
+
+input[type="checkbox"]:disabled + label span.LRI-checkbox::after {
+    cursor: not-allowed;
 }
 
 /* Button */
@@ -275,10 +293,19 @@ input[type="checkbox"]:checked + label span.LRI-checkbox::after {
     border: 1px solid var(--main-color);
 }
 
-.LRI-datepicker-button:hover {
+.LRI-datepicker-button:hover:enabled {
     background-color: var(--main-color);
     color: white;
     cursor: pointer;
+}
+
+.LRI-datepicker-button:disabled {
+    color: var(--input-background-1);
+    border: 2px solid var(--input-background-1);
+}
+
+.LRI-datepicker-button:hover:disabled {
+    cursor: not-allowed;
 }
 
 /* Errors */

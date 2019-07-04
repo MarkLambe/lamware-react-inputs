@@ -84,7 +84,6 @@ class App extends React.Component {
           label={this.state.formData.date.translation}
           name="date"
           value={this.state.formData.date.value}
-          onChange={this.handleInputChange} 
           required />
       );
     }
@@ -95,19 +94,17 @@ class App extends React.Component {
     return (
       <div className="page-box">
         <div className="form-box">
-          <Form title="Demo!" validate={this.validateForm} onSubmit={this.handleSubmit}>
+          <Form title="Demo!" onSubmit={this.handleSubmit} onChange={this.handleInputChange}>
                 <TextInput 
                   label={formData.text_input.translation}
                   name="text_input"
                   value={formData.text_input.value}
-                  onChange={this.handleInputChange} 
                   required />
 
                 <TextInput 
                   label="Text Input With Validation"
                   name="text_input_with_validation"
-                  value={formData.text_input_with_validation.value}
-                  onChange={this.handleInputChange} 
+                  value={formData.text_input_with_validation.value} 
                   validator={this.regexValidation} />
 
                 <span>Other form children, like text, are still rendered like this.</span>
@@ -116,15 +113,13 @@ class App extends React.Component {
                   label={formData.select_from_strings.translation}
                   options={OPTION_STRINGS}
                   name="select_from_strings"
-                  value={formData.select_from_strings.value}
-                  onChange={this.handleInputChange} />
+                  value={formData.select_from_strings.value} />
                   
                 <Select
                   label={formData.select_from_objects.translation}
                   options={OPTION_OBJECTS}
                   name="select_from_objects"
-                  value={formData.select_from_objects.value}
-                  onChange={this.handleInputChange} 
+                  value={formData.select_from_objects.value} 
                   valueKey="id"
                   labelKey="name"
                   required />
@@ -133,22 +128,19 @@ class App extends React.Component {
                   label={formData.radio_from_strings.translation}
                   name="radio_from_strings"
                   value={formData.radio_from_strings.value}
-                  onChange={this.handleInputChange}
                   options={OPTION_STRINGS} />
 
                 <Radio
                   label={formData.radio_from_objects.translation}
                   name="radio_from_objects"
                   value={formData.radio_from_objects.value}
-                  onChange={this.handleInputChange}
                   options={OPTION_OBJECTS}
                   valueKey="id"
                   labelKey="name" 
-                  required/>
+                  required />
 
                 <Checkbox
                   label={this.state.formData.checkbox.translation}
-                  onChange={this.handleInputChange}
                   value={this.state.formData.checkbox.value}
                   name="checkbox" />
 

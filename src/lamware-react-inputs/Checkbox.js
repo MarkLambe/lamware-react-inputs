@@ -31,7 +31,8 @@ class Checkbox extends React.Component {
                                 type="checkbox" 
                                 name={this.props.name}
                                 checked={value || false}
-                                onChange={this.handleChange} />
+                                onChange={this.handleChange} 
+                                disabled={this.props.disabled || false} />
                             <label 
                                 htmlFor={this.props.name}>
                                 <span className="LRI-checkbox">{ this.props.label }</span>

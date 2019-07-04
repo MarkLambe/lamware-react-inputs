@@ -86,7 +86,13 @@ class Form extends React.Component {
                 _hasLRIForm: true,
                 _updateFormAboutChange: this.updateFormAboutChange, 
                 errors: this.getErrorsForChild(child.props.name),
-                showValidationMessages: this.state.showErrors
+                showValidationMessages: this.state.showErrors,
+            }
+            if(this.props.disabled && this.props.disabled === true){
+                newProps['disabled'] = true;
+            }
+            if(!child.props.onChange && this.props.onChange){
+                newProps['onChange'] = this.props.onChange;
             }
         }
         return newProps;
@@ -139,7 +145,7 @@ class Form extends React.Component {
 
                 <form className="LRI-form" onSubmit={this.handleSubmit}>
                     { this.getChildren() }
-                    <Button disabled={ !this.isFormValid() && this.state.showErrors }/>
+                    <Button type='submit' disabled={ (!this.isFormValid() && this.state.showErrors) || this.props.disabled}/>
                 </form>
             </div>
         );

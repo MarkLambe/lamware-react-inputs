@@ -19,7 +19,8 @@ class CustomDatepickerInput extends React.Component {
         return (
             <button
               className="LRI-datepicker-button"
-              onClick={this.handleClick}>
+              onClick={this.handleClick}
+              disabled={this.props.disabled || false}>
               {this.props.value || 'Select Date'}
             </button>
           )
@@ -53,7 +54,8 @@ class LRIDatepicker extends React.Component {
                             customInput={<CustomDatepickerInput />}
                             dateFormat={ this.props.dateFormat || 'dd/MMM/yyyy' }
                             selected={this.props.value}
-                            onChange={this.handleChange} />
+                            onChange={this.handleChange}
+                            disabled={this.props.disabled || false} />
                     </div>
                 </div>
                 { getValidationFeedback(this.props.showValidationMessages, this.props.errors) }

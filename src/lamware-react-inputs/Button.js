@@ -29,7 +29,7 @@ class Button extends React.Component {
                     </div> 
                     <div className="LRI-form-field-content">
                         <button 
-                            type="submit" 
+                            type={this.props.type || 'button'}
                             className="LRI-button"
                             disabled={this.props.disabled || false}>Submit</button>
                     </div>

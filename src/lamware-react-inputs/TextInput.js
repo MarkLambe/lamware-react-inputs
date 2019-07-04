@@ -32,7 +32,7 @@ class TextInput extends React.Component {
                             value={this.props.value || ''}
                             className="LRI-input"
                             placeholder={this.props.label}
-                        />
+                            disabled={this.props.disabled || false} />
                     </div>
                 </div>
                 { getValidationFeedback(this.props.showValidationMessages, this.props.errors) }

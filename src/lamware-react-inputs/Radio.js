@@ -41,7 +41,8 @@ class Radio extends React.Component {
                         type="radio" 
                         name={this.props.name}
                         value={value}
-                        onChange={this.handleChange} />
+                        onChange={this.handleChange} 
+                        disabled={this.props.disabled || false} />
                     <label htmlFor={this.props.name + '-' + value}><span className="LRI-radio">{label}</span></label>
                 </div>
             );

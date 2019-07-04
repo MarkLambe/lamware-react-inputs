@@ -2,7 +2,7 @@ var path = require('path');
 
 module.exports = {
     mode: 'production',
-    entry: './src/index.js',
+    entry: './src/lamware-react-inputs/index.js',
     output: {
         path: path.resolve('lib'),
         filename: 'index.js',
