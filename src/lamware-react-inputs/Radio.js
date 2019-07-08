@@ -34,6 +34,10 @@ class Radio extends React.Component {
             else if(typeof(o) === 'string'){
                 value = label = o;
             }
+            else if(typeof(o) === 'number' || typeof(o) === 'boolean'){
+                value = label = o;
+                label = label.toString();
+            }
             markup.push(
                 <div key={this.props.name + '-' + value} className="LRI-checkable-option">
                     <input
@@ -42,7 +46,8 @@ class Radio extends React.Component {
                         name={this.props.name}
                         value={value}
                         onChange={this.handleChange} 
-                        disabled={this.props.disabled || false} />
+                        disabled={this.props.disabled || false}
+                        checked={String(this.props.value) === String(value)} />
                     <label htmlFor={this.props.name + '-' + value}><span className="LRI-radio">{label}</span></label>
                 </div>
             );

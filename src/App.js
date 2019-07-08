@@ -2,7 +2,7 @@ import React from "react";
 import { TextInput, Select, Radio, Form, Checkbox, Datepicker } from './lamware-react-inputs/index';
 import './App.css';
 
-const OPTION_STRINGS = ['First', 'Second', 'Third'];
+const OPTION_STRINGS = ['2016', '2017', '2018'];
 const OPTION_OBJECTS = [{id: 0, name: 'First'}, {id: 1, name: 'Second'}, {id: 2, name: 'Third'}];
 const EMAIL_REGEX = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
 

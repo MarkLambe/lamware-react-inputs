@@ -3,8 +3,6 @@ Form classes
 */
 
 .LRI-form-page {
-    margin: 0% 5%;
-    margin-bottom: 100px;
     --main-color: blueviolet;
     --error-color: #FF4040;
     --success-color: #00C781;
@@ -13,14 +11,38 @@ Form classes
     --text-color: #333;
 }
 
+.LRI-form-page-small {
+    margin: 0% 3%;
+    margin-bottom: 10px;
+}
+
+.LRI-form-page-medium {
+    margin: 0% 5%;
+    margin-bottom: 100px;
+}
+
+
 .LRI-form {
-    margin-top: 50px;
     display: grid;
     grid-template-columns: 100%;
+}
+
+.LRI-form-small {
+    margin-top: 10px;
+    grid-gap: 20px;
+}
+
+.LRI-form-medium {
+    margin-top: 50px;
     grid-gap: 50px;
 }
 
-.LRI-form-header {
+.LRI-form-header-small {
+    margin-top: 10px;
+    font-size: 100%;
+}
+
+.LRI-form-header-medium {
     margin-top: 35px;
     font-size: 250%;
 }
@@ -39,12 +61,26 @@ Form classes
     grid-template-rows: 30px 1fr;
 }
 
+.LRI-form-field-small {
+    display: grid;
+    grid-template-columns: auto auto;
+}
+
 .LRI-form-field-header {
     font-size: 120%;
 }
 
+.LRI-form-field-header-small {
+    font-size: 100%;
+    margin-right: 10px;
+    text-align: start;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+}
+
 .LRI-form-field-content {
-    height: 100%;
+    height: auto;
     position: relative;
 }
 

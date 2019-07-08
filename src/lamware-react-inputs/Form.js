@@ -59,7 +59,7 @@ class Form extends React.Component {
         event.preventDefault();
         if(this.isFormValid()){
             this.setState({showErrors: false});
-            this.props.onSubmit();
+            this.props.onSubmit(event);
         }
         else{
             this.setState({showErrors: true});
@@ -90,6 +90,9 @@ class Form extends React.Component {
             }
             if(this.props.disabled && this.props.disabled === true){
                 newProps['disabled'] = true;
+            }
+            if(this.props.small && this.props.small === true){
+                newProps['small'] = true;
             }
             if(!child.props.onChange && this.props.onChange){
                 newProps['onChange'] = this.props.onChange;
@@ -137,15 +140,24 @@ class Form extends React.Component {
     }
 
     render() {
+        let formClasses = "LRI-form ";
+        formClasses += this.props.small ? " LRI-form-small" : " LRI-form-medium";
+
+        let formPageClasses = "LRI-form-page ";
+        formPageClasses += this.props.small ? " LRI-form-page-small" : " LRI-form-page-medium";
         return (
-            <div className="LRI-form-page">
-                <div className="LRI-form-header">
+            <div className={formPageClasses}>
+                <div className={this.props.small ? "LRI-form-header-small" : "LRI-form-header-medium"}>
                     {this.props.title || ''}
                 </div>
 
-                <form className="LRI-form" onSubmit={this.handleSubmit}>
-                    { this.getChildren() }
-                    <Button type='submit' disabled={ (!this.isFormValid() && this.state.showErrors) || this.props.disabled}/>
+                <form 
+                    className={formClasses}
+                    onSubmit={this.handleSubmit}>
+                        { this.getChildren() }
+                        <Button 
+                            type='submit' 
+                            disabled={ (!this.isFormValid() && this.state.showErrors) || this.props.disabled}/>
                 </form>
             </div>
         );

@@ -24,3 +24,13 @@ body {
     margin-top: 20px;
     margin-left: 5%;
 }
+
+@media only screen and (max-width: 600px) {
+    .page-box {
+        grid-template-columns: 100%;
+    }
+
+    .sidebar {
+        display: none;
+    }
+}

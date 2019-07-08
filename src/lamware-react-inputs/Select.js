@@ -40,6 +40,10 @@ class Select extends React.Component {
             else if(typeof(o) === 'string'){
                 value = label = o;
             }
+            else if(typeof(o) === 'number' || typeof(o) === 'boolean'){
+                value = label = o;
+                label = label.toString();
+            }
             if(String(value) === String(nextProps.value)){
                 localVal = label;
             }
@@ -107,11 +111,25 @@ class Select extends React.Component {
     }
 
     render() {
+        let fieldClass;
+        let headerClass;
+        let header;
+        if(this.props.small){
+            fieldClass = "LRI-form-field-small";
+            headerClass = this.props.label ? "LRI-form-field-header-small" : "";
+            header = this.props.label;
+        }
+        else{
+            fieldClass = "LRI-form-field";
+            headerClass ="LRI-form-field-header" ;
+            header = this.state.value.length > 0 ? this.props.label : '';
+        }
+
         return (
             <div className="LRI-form-row">
-                <div className="LRI-form-field">
-                    <div className="LRI-form-field-header">
-                        {this.state.value.length > 0 ? this.props.label : ''}   
+                <div className={fieldClass}>
+                    <div className={headerClass}>
+                        {header}   
                     </div> 
                     <div className="LRI-form-field-content">
                         <input

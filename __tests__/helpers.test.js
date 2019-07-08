@@ -1,7 +1,7 @@
 import React from 'react';
 import { getLRIChildren } from '../src/lamware-react-inputs/helpers'
 import Enzyme from 'enzyme';
-import  { TextInput, Select, Radio, Form, Checkbox, Datepicker, Button } from '../src/lamware-react-inputs';
+import  { TextInput, Form, Checkbox } from '../src/lamware-react-inputs';
 import Adapter from 'enzyme-adapter-react-16';
 
 Enzyme.configure({ adapter: new Adapter() });
