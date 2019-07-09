@@ -5,7 +5,6 @@ import './styles.css';
 class Button extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {errors: []};
         this.handleClick = this.handleClick.bind(this);
     }
     
@@ -17,30 +16,13 @@ class Button extends React.Component {
 
 
     render() {
-        let errorMarkup = [];
-        this.state.errors.forEach((e) => errorMarkup.push(<li key={e}>{e}</li>));
-        let validatedCheckClass = "LRI-validated-check";
-
+        let buttonClasses = this.props.small ? "LRI-button LRI-button-small" : "LRI-button LRI-button-medium";
         return (
-            <div className="LRI-form-row">
-                <div className="LRI-form-field">
-                    <div className="LRI-form-field-header">
-                        
-                    </div> 
-                    <div className="LRI-form-field-content">
-                        <button 
-                            type={this.props.type || 'button'}
-                            className="LRI-button"
-                            disabled={this.props.disabled || false}>Submit</button>
-                    </div>
-                </div>
-                <div className={validatedCheckClass}>
-
-                </div>
-                <div className="LRI-form-error-section">
-                    { errorMarkup }
-                </div>
-            </div>
+            <button 
+                type={this.props.type || 'button'}
+                className={buttonClasses}
+                disabled={this.props.disabled || false}
+                onClick={this.handleClick}>{this.props.label || "Submit"}</button>
         );
     }
 }

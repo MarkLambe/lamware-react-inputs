@@ -68,11 +68,18 @@ class Form extends React.Component {
     }
 
     getChildren() {
-        return React.Children.map(this.props.children, (child) => {
+        let newPropKids = React.Children.map(this.props.children, (child) => {
             if(child){
                 return React.cloneElement(child, this.getNewProps(child))
             }
         });
+        return newPropKids.map((k, i) => {
+            return (
+                <div key={i} className="LRI-form-row">
+                    { k }
+                </div>
+            );
+        })
     }
 
     getErrorsForChild(childName) {
@@ -155,9 +162,12 @@ class Form extends React.Component {
                     className={formClasses}
                     onSubmit={this.handleSubmit}>
                         { this.getChildren() }
+                    <div className="LRI-form-row">
                         <Button 
                             type='submit' 
-                            disabled={ (!this.isFormValid() && this.state.showErrors) || this.props.disabled}/>
+                            disabled={ (!this.isFormValid() && this.state.showErrors) || this.props.disabled}
+                            small={this.props.small}/>
+                    </div>
                 </form>
             </div>
         );

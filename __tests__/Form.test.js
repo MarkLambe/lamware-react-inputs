@@ -5,14 +5,6 @@ import Adapter from 'enzyme-adapter-react-16';
 
 Enzyme.configure({ adapter: new Adapter() });
 
-test('form component renders', () => {
-    const wrapper = Enzyme.mount(
-        <Form />
-    );
-    const p = wrapper.find('.LRI-form-page');
-    expect(p.text()).toBe('Submit');
-});
-
 test('form component with children renders', () => {
     const wrapper = Enzyme.shallow(
         <Form>

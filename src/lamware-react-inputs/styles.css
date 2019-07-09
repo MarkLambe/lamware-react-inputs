@@ -34,7 +34,7 @@ Form classes
 
 .LRI-form-medium {
     margin-top: 50px;
-    grid-gap: 50px;
+    grid-gap: 40px;
 }
 
 .LRI-form-header-small {
@@ -55,41 +55,31 @@ Form classes
     grid-template-rows: auto;
 }
 
-.LRI-form-field {
-    width: auto;
-    display: grid;
-    grid-template-rows: 30px 1fr;
-}
 
-.LRI-form-field-small {
+/* The Field */
+.LRI-form-field {
     display: grid;
-    grid-template-columns: auto auto;
+    grid-template-areas: 
+        "header header"
+        "input emoji"
+        "error error";
+    grid-template-rows: auto 1fr auto;
+    grid-template-columns: 1fr auto;
+    grid-column-gap: 10px;
+    grid-row-gap: 10px;
 }
 
 .LRI-form-field-header {
+    grid-area: header;
     font-size: 120%;
 }
 
-.LRI-form-field-header-small {
-    font-size: 100%;
-    margin-right: 10px;
-    text-align: start;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-}
-
 .LRI-form-field-content {
-    height: auto;
-    position: relative;
+    grid-area: input;
 }
 
-.LRI-feedback-section {
-    display: grid;
-    grid-template-columns: 50px 1fr;
-}
-
-.LRI-validated-check {
+.LRI-form-field-emoji {
+    grid-area: emoji;
     height: 100%;
     display: flex;
     align-items: flex-end;
@@ -97,45 +87,32 @@ Form classes
     font-size: 150%;
 }
 
-.LRI-validated-check-failed {
-    color: var(--error-color);
-}
-
-.LRI-validated-check-passed {
-    color: var(--success-color);
-}
-
-.LRI-form-error-section {
-    padding-left: 30px;
+.LRI-form-field-error {
+    grid-area: error;
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
     color: var(--error-color);
 }
 
-@media only screen and (max-width: 800px) {
-    .LRI-form-row {
-        width: 100%;
-        display: grid;
-        grid-template-rows: auto auto;
-        grid-template-columns: 100%;
-        grid-gap: 10px;
-    }
-
-    .LRI-feedback-section {
-        height: 25px;
-        margin-top: 5px;
-    }
-}
-
 /* Text Input */
 .LRI-input {
     padding: 0px 10px;
-    height: 50px;
+    height: 40px;
     border: none;
     border-bottom: 1px solid var(--input-background-1);;
     color: var(--text-color);
-    font-size: 125%;
+    font-size: 100%;
+    border-top-left-radius: 3px;
+    border-top-right-radius: 3px;
+}
+
+.LRI-input-small {
+    padding: 0px 3px;
+    border: none;
+    border-bottom: 1px solid var(--input-background-1);;
+    color: var(--text-color);
+    font-size: 100%;
     border-top-left-radius: 3px;
     border-top-right-radius: 3px;
 }
@@ -288,14 +265,24 @@ input[type="checkbox"]:disabled + label span.LRI-checkbox::after {
     background-color: white;
     border: none;
     color: var(--main-color);
-    padding: 10px 25px;
     text-align: center;
     text-decoration: none;
     display: inline-block;
-    font-size: 16px;
-    margin: 4px 2px;
     border-radius: 10px;
     border: 2px solid var(--main-color);
+    max-height: 40px;
+}
+
+.LRI-button-small {
+    padding: 5px 12px;
+    font-size: 12px;
+    margin: 4px 2px;
+}
+
+.LRI-button-medium {
+    padding: 10px 25px;
+    font-size: 16px;
+    margin: 4px 2px;
 }
 
 .LRI-button:hover:enabled {

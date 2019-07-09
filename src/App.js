@@ -116,13 +116,14 @@ class App extends React.Component {
                   value={formData.select_from_strings.value} />
                   
                 <Select
-                  label={formData.select_from_objects.translation}
+                  label="Small input"
                   options={OPTION_OBJECTS}
                   name="select_from_objects"
                   value={formData.select_from_objects.value} 
                   valueKey="id"
                   labelKey="name"
-                  required />
+                  required 
+                  small/>
 
                 <Radio
                   label={formData.radio_from_strings.translation}

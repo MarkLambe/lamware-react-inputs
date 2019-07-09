@@ -1,6 +1,6 @@
 import React from 'react';
 import './styles.css';
-import { getValidationFeedback } from './helpers'
+import { getValidationMarkup, getErrorMarkup } from './helpers';
 
 class TextInput extends React.Component {
     constructor(props) {
@@ -20,22 +20,25 @@ class TextInput extends React.Component {
 
     render() {
         return (
-            <div className="LRI-form-row">
-                <div className="LRI-form-field">
-                    <div className="LRI-form-field-header">
-                        {this.props.value && this.props.value.length > 0 ? this.props.label : ''}   
-                    </div> 
-                    <div className="LRI-form-field-content">
-                        <input 
-                            name={this.props.name} 
-                            onChange={this.handleChange}
-                            value={this.props.value || ''}
-                            className="LRI-input"
-                            placeholder={this.props.label}
-                            disabled={this.props.disabled || false} />
-                    </div>
+            <div className="LRI-form-field">
+                <div className="LRI-form-field-header">
+                    {this.props.value && this.props.value.length > 0 ? this.props.label : ''}
                 </div>
-                { getValidationFeedback(this.props.showValidationMessages, this.props.errors) }
+                <div className="LRI-form-field-content">
+                    <input 
+                        name={this.props.name} 
+                        onChange={this.handleChange}
+                        value={this.props.value || ''}
+                        className="LRI-input"
+                        placeholder={this.props.label}
+                        disabled={this.props.disabled || false} />
+                </div>
+                <div className="LRI-form-field-emoji">
+                    { getValidationMarkup(this.props.showValidationMessages, this.props.errors) }
+                </div>
+                <div className="LRI-form-field-error">
+                    { getErrorMarkup(this.props.showValidationMessages, this.props.errors) }
+                </div>
             </div>
         );
     }

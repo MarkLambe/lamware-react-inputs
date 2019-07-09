@@ -1,7 +1,7 @@
 import React from 'react';
 import './styles.css';
 import Datepicker from 'react-datepicker';
-import { getValidationFeedback } from './helpers'
+import { getValidationMarkup, getErrorMarkup } from './helpers';
 
 
 class CustomDatepickerInput extends React.Component {
@@ -44,21 +44,24 @@ class LRIDatepicker extends React.Component {
 
     render() {
         return (
-            <div className="LRI-form-row">
-                <div className="LRI-form-field">
-                    <div className="LRI-form-field-header">
-                        { this.props.label }
-                    </div> 
-                    <div className="LRI-form-field-content">
-                        <Datepicker
-                            customInput={<CustomDatepickerInput />}
-                            dateFormat={ this.props.dateFormat || 'dd/MMM/yyyy' }
-                            selected={this.props.value}
-                            onChange={this.handleChange}
-                            disabled={this.props.disabled || false} />
-                    </div>
+            <div className="LRI-form-field">
+                <div className="LRI-form-field-header">
+                    {this.props.label}
                 </div>
-                { getValidationFeedback(this.props.showValidationMessages, this.props.errors) }
+                <div className="LRI-form-field-content">
+                    <Datepicker
+                        customInput={<CustomDatepickerInput />}
+                        dateFormat={ this.props.dateFormat || 'dd/MMM/yyyy' }
+                        selected={this.props.value}
+                        onChange={this.handleChange}
+                        disabled={this.props.disabled || false} />
+                </div>
+                <div className="LRI-form-field-emoji">
+                    { getValidationMarkup(this.props.showValidationMessages, this.props.errors) }
+                </div>
+                <div className="LRI-form-field-error">
+                    { getErrorMarkup(this.props.showValidationMessages, this.props.errors) }
+                </div>
             </div>
         );
     }

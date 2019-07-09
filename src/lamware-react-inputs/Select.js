@@ -1,6 +1,6 @@
 import React from 'react';
 import './styles.css';
-import { getValidationFeedback } from './helpers'
+import { getValidationMarkup, getErrorMarkup } from './helpers';
 
 
 class Select extends React.Component {
@@ -16,10 +16,12 @@ class Select extends React.Component {
         this.onFocus = this.onFocus.bind(this);
         this.setOptionsBoxRef = this.setOptionsBoxRef.bind(this);
         this.handleClick = this.handleClick.bind(this);
+        this.createLocalOptions = this.createLocalOptions.bind(this);
     }
     
     componentDidMount() {        
         document.addEventListener('mousedown', this.handleClick);
+        this.createLocalOptions(this.props);
     }
 
     componentWillUnmount() {
@@ -27,9 +29,13 @@ class Select extends React.Component {
     }
 
     componentWillReceiveProps(nextProps) {
+        this.createLocalOptions(nextProps);
+    }
+
+    createLocalOptions(props) {
         let localVal = this.state.value;
         let localOptions = {};
-        nextProps.options.forEach((o) => {
+        props.options.forEach((o) => {
             let value = '', label = '';
             if(typeof(o) === 'object'){
                 let valueKey = this.props.valueKey || 'pk';
@@ -44,7 +50,7 @@ class Select extends React.Component {
                 value = label = o;
                 label = label.toString();
             }
-            if(String(value) === String(nextProps.value)){
+            if(String(value) === String(props.value)){
                 localVal = label;
             }
             localOptions[value] = label;
@@ -80,7 +86,6 @@ class Select extends React.Component {
             return;
         }
         let optionsList = [];
-
         Object.keys(this.state.localOptions).forEach((k) => {
             if(this.state.value === null || this.state.value.length === 0 || this.state.localOptions[k].toUpperCase().includes(this.state.value.toUpperCase())){
                 optionsList.push(
@@ -111,39 +116,28 @@ class Select extends React.Component {
     }
 
     render() {
-        let fieldClass;
-        let headerClass;
-        let header;
-        if(this.props.small){
-            fieldClass = "LRI-form-field-small";
-            headerClass = this.props.label ? "LRI-form-field-header-small" : "";
-            header = this.props.label;
-        }
-        else{
-            fieldClass = "LRI-form-field";
-            headerClass ="LRI-form-field-header" ;
-            header = this.state.value.length > 0 ? this.props.label : '';
-        }
-
         return (
-            <div className="LRI-form-row">
-                <div className={fieldClass}>
-                    <div className={headerClass}>
-                        {header}   
-                    </div> 
-                    <div className="LRI-form-field-content">
-                        <input
-                            name={this.props.name} 
-                            value={this.state.value}
-                            className="LRI-input"
-                            placeholder={'Search for ' + this.props.label}
-                            onFocus={ this.onFocus }
-                            onChange={this.handleChange}
-                            disabled={this.props.disabled || false} />
-                        { this.getListMarkup() }
-                    </div>
+            <div className="LRI-form-field">
+                <div className="LRI-form-field-header">
+                    {this.props.label}
                 </div>
-                { getValidationFeedback(this.props.showValidationMessages, this.props.errors) }
+                <div className="LRI-form-field-content">
+                    <input
+                        name={this.props.name} 
+                        value={this.state.value}
+                        className="LRI-input"
+                        placeholder={this.props.label}
+                        onFocus={ this.onFocus }
+                        onChange={this.handleChange}
+                        disabled={this.props.disabled || false} />
+                        { this.getListMarkup() }
+                </div>
+                <div className="LRI-form-field-emoji">
+                    { getValidationMarkup(this.props.showValidationMessages, this.props.errors) }
+                </div>
+                <div className="LRI-form-field-error">
+                    { getErrorMarkup(this.props.showValidationMessages, this.props.errors) }
+                </div>
             </div>
         );
     }

@@ -1,24 +1,24 @@
 import React from 'react';
 
-function getValidationMarkup(showValidationMessages, errors) {
+export function getValidationMarkup(showValidationMessages, errors) {
     if(!showValidationMessages || errors === undefined) return;
     if(errors.length > 0){
         return (
-            <span className="LRI-validated-check-failed">
+            <span>
                 😕
             </span>
         )
     }
     else{
         return (
-            <span className="LRI-validated-check-passed">
+            <span>
                 👍🏻
             </span>
         )
     }
 }
 
-function getErrorMarkup(showValidationMessages, errors) {
+export function getErrorMarkup(showValidationMessages, errors) {
     if(!showValidationMessages || errors === undefined) return;
     if(errors.length > 0){
         let errorMarkup = [];
@@ -29,19 +29,6 @@ function getErrorMarkup(showValidationMessages, errors) {
         });
         return errorMarkup;
     }
-}
-
-export function getValidationFeedback(showValidationMessages, errors) {
-    return (
-        <div className="LRI-feedback-section">
-            <div className="LRI-validated-check">
-                { getValidationMarkup(showValidationMessages, errors) }
-            </div>
-            <div className="LRI-form-error-section">
-                { getErrorMarkup(showValidationMessages, errors) }
-            </div>
-        </div>
-    );
 }
 
 export function getLRIChildren(children){
