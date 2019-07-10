@@ -1,5 +1,5 @@
 import React from "react";
-import { TextInput, Select, Radio, Form, Checkbox, Datepicker } from './lamware-react-inputs/index';
+import { TextInput, Button, Select, Radio, Form, Checkbox, Datepicker } from './lamware-react-inputs/index';
 import './App.css';
 
 const OPTION_STRINGS = ['2016', '2017', '2018'];
@@ -26,6 +26,12 @@ class App extends React.Component {
     this.handleInputChange = this.handleInputChange.bind(this);
     this.getSidebarMarkUp = this.getSidebarMarkUp.bind(this);
     this.getConditionallyRenderedMarkup = this.getConditionallyRenderedMarkup.bind(this);
+    this.tester = this.tester.bind(this);
+  }
+
+  tester() {
+    this.handleInputChange('select_from_strings', null);
+    this.handleInputChange('select_from_objects', null);
   }
 
   handleSubmit() {
@@ -108,6 +114,10 @@ class App extends React.Component {
                   validator={this.regexValidation} />
 
                 <span>Other form children, like text, are still rendered like this.</span>
+
+                <Button 
+                  label="Test"
+                  onClick={this.tester} />
 
                 <Select
                   label={formData.select_from_strings.translation}

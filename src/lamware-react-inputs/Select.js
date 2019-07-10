@@ -35,6 +35,9 @@ class Select extends React.Component {
     createLocalOptions(props) {
         let localVal = this.state.value;
         let localOptions = {};
+        if(props.value === null){
+            localVal = '';
+        }
         props.options.forEach((o) => {
             let value = '', label = '';
             if(typeof(o) === 'object'){
@@ -50,7 +53,7 @@ class Select extends React.Component {
                 value = label = o;
                 label = label.toString();
             }
-            if(String(value) === String(props.value)){
+            if(props.value && String(value) === String(props.value)){
                 localVal = label;
             }
             localOptions[value] = label;
