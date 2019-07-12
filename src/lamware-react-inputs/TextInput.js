@@ -19,19 +19,29 @@ class TextInput extends React.Component {
     }
 
     render() {
+        let inputClass = "LRI-input ";
+        inputClass += this.props.small ? "LRI-input-small" : "LRI-input-medium";
+
+        let headerClass = "LRI-form-field-header ";
+        headerClass += this.props.small ? "LRI-form-field-header-small" : "LRI-form-field-header-medium";
         return (
-            <div className="LRI-form-field">
-                <div className="LRI-form-field-header">
-                    {this.props.value && this.props.value.length > 0 ? this.props.label : ''}
+            <div className='LRI-form-field'>
+                <div className={headerClass}>
+                    {
+                        this.props.label && 
+                        this.props.value && 
+                        this.props.value.length > 0 ? this.props.label : ''
+                    }
                 </div>
                 <div className="LRI-form-field-content">
                     <input 
                         name={this.props.name} 
                         onChange={this.handleChange}
                         value={this.props.value || ''}
-                        className="LRI-input"
-                        placeholder={this.props.label}
-                        disabled={this.props.disabled || false} />
+                        className={inputClass}
+                        placeholder={this.props.placeholder || this.props.label}
+                        disabled={this.props.disabled || false} 
+                        type={this.props.type || 'text'}/>
                 </div>
                 <div className="LRI-form-field-emoji">
                     { getValidationMarkup(this.props.showValidationMessages, this.props.errors) }

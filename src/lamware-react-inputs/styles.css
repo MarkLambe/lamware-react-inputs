@@ -21,7 +21,6 @@ Form classes
     margin-bottom: 100px;
 }
 
-
 .LRI-form {
     display: grid;
     grid-template-columns: 100%;
@@ -50,8 +49,7 @@ Form classes
 .LRI-form-row {
     width: 100%;
     display: grid;
-    grid-template-columns: auto 1fr;
-    grid-gap: 20px;
+    grid-gap: 0px;
     grid-template-rows: auto;
 }
 
@@ -74,7 +72,16 @@ Form classes
     font-size: 120%;
 }
 
+.LRI-form-field-header-small {
+    font-size: 100%;
+}
+
+.LRI-form-field-header-medium {
+    font-size: 120%;
+}
+
 .LRI-form-field-content {
+    position: relative;
     grid-area: input;
 }
 
@@ -97,8 +104,6 @@ Form classes
 
 /* Text Input */
 .LRI-input {
-    padding: 0px 10px;
-    height: 40px;
     border: none;
     border-bottom: 1px solid var(--input-background-1);;
     color: var(--text-color);
@@ -108,13 +113,14 @@ Form classes
 }
 
 .LRI-input-small {
-    padding: 0px 3px;
-    border: none;
-    border-bottom: 1px solid var(--input-background-1);;
-    color: var(--text-color);
-    font-size: 100%;
-    border-top-left-radius: 3px;
-    border-top-right-radius: 3px;
+    width: 100px;
+    padding: 0px 5px;
+    height: 30px;
+}
+
+.LRI-input-medium {
+    height: 40px;
+    padding: 0px 10px;
 }
 
 .LRI-input:hover:enabled {
@@ -136,15 +142,20 @@ Form classes
     overflow: scroll;
     max-height: 300px;
     position: absolute;
-    min-width: 150px;
     z-index: 3;
 }
 
-.LRI-select-list :hover {
+.LRI-select-list:hover {
     cursor: pointer;
 }
 
-.LRI-select-option {
+.LRI-select-option-small {
+    font-size: 100%;
+    line-height: 150%;
+    margin: 0px 10px;
+}
+
+.LRI-select-option-medium {
     font-size: 125%;
     line-height: 150%;
     margin: 0px 10px;

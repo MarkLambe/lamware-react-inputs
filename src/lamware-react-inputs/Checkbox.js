@@ -17,12 +17,11 @@ class Checkbox extends React.Component {
 
     render() {
         const value = this.props.value;
+        let headerClass = "LRI-form-field-header ";
+        headerClass += this.props.small ? "LRI-form-field-header-small" : "LRI-form-field-header-medium";
 
         return (
             <div className="LRI-form-field">
-                <div className="LRI-form-field-header">
-                    {this.props.label}
-                </div>
                 <div className="LRI-form-field-content LRI-checkable-section">
                     <div className="LRI-checkable-option">
                         <input

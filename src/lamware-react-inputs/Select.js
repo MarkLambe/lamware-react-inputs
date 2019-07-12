@@ -89,10 +89,11 @@ class Select extends React.Component {
             return;
         }
         let optionsList = [];
+        let optionClass = this.props.small ? 'LRI-select-option-small' : 'LRI-select-option-medium';
         Object.keys(this.state.localOptions).forEach((k) => {
             if(this.state.value === null || this.state.value.length === 0 || this.state.localOptions[k].toUpperCase().includes(this.state.value.toUpperCase())){
                 optionsList.push(
-                    <div key={k} className="LRI-select-option" onClick={() => this.optionSelected(k, this.state.localOptions[k])}> 
+                    <div key={k} className={optionClass} onClick={() => this.optionSelected(k, this.state.localOptions[k])}> 
                         {this.state.localOptions[k]} 
                     </div>
                 )
@@ -119,16 +120,21 @@ class Select extends React.Component {
     }
 
     render() {
+        let inputClass = "LRI-input ";
+        inputClass += this.props.small ? "LRI-input-small" : "LRI-input-medium";
+
+        let headerClass = "LRI-form-field-header ";
+        headerClass += this.props.small ? "LRI-form-field-header-small" : "LRI-form-field-header-medium";
         return (
             <div className="LRI-form-field">
-                <div className="LRI-form-field-header">
+                <div className={headerClass}>
                     {this.props.label}
                 </div>
                 <div className="LRI-form-field-content">
                     <input
                         name={this.props.name} 
                         value={this.state.value}
-                        className="LRI-input"
+                        className={inputClass}
                         placeholder={this.props.label}
                         onFocus={ this.onFocus }
                         onChange={this.handleChange}

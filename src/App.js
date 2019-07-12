@@ -1,5 +1,5 @@
 import React from "react";
-import { TextInput, Button, Select, Radio, Form, Checkbox, Datepicker } from './lamware-react-inputs/index';
+import { TextInput, Select, Radio, Form, Checkbox, Datepicker } from './lamware-react-inputs/index';
 import './App.css';
 
 const OPTION_STRINGS = ['2016', '2017', '2018'];
@@ -12,6 +12,8 @@ class App extends React.Component {
     this.state = {
         formData: {
             text_input: {value: null, translation: 'Text Input'},
+            no_label_text_input: {value: null, translation: 'No Label Input'},
+            small_text_input: {value: null, translation: 'Small Input'},
             text_input_with_validation: {value: null, translation: 'Text Input With Validation (Email)'},
             select_from_strings: {value: null, translation: 'Select From Strings'},
             select_from_objects: {value: null, translation: 'Select From Objects'},
@@ -101,23 +103,32 @@ class App extends React.Component {
       <div className="page-box">
         <div className="form-box">
           <Form title="Demo!" onSubmit={this.handleSubmit} onChange={this.handleInputChange}>
+                
+                <span>Basic input, labels appear above when user types</span>
                 <TextInput 
                   label={formData.text_input.translation}
                   name="text_input"
-                  value={formData.text_input.value}
-                  required />
+                  value={formData.text_input.value} />
 
+                <span>Same with no label (still has placeholder) takes up less space</span>
+                <TextInput 
+                  placeholder={formData.no_label_text_input.translation}
+                  name="no_label_text_input"
+                  value={formData.no_label_text_input.value} />
+
+                <span>Using the 'small' prop</span>
+                <TextInput 
+                  label={formData.small_text_input.translation}
+                  name="small_text_input"
+                  value={formData.small_text_input.value}
+                  small />
+
+                <span>Basic input with email regex (onsubmit)</span>
                 <TextInput 
                   label="Text Input With Validation"
                   name="text_input_with_validation"
                   value={formData.text_input_with_validation.value} 
                   validator={this.regexValidation} />
-
-                <span>Other form children, like text, are still rendered like this.</span>
-
-                <Button 
-                  label="Test"
-                  onClick={this.tester} />
 
                 <Select
                   label={formData.select_from_strings.translation}

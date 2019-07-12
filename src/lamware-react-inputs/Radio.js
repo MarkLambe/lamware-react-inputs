@@ -56,9 +56,12 @@ class Radio extends React.Component {
     }
 
     render() {
+        let headerClass = "LRI-form-field-header ";
+        headerClass += this.props.small ? "LRI-form-field-header-small" : "LRI-form-field-header-medium";
+
         return (
             <div className="LRI-form-field">
-                <div className="LRI-form-field-header">
+                <div className={headerClass}>
                     { this.props.label }
                 </div>
                 <div className="LRI-form-field-content LRI-checkable-section">

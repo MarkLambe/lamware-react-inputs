@@ -18,11 +18,15 @@ class Button extends React.Component {
     render() {
         let buttonClasses = this.props.small ? "LRI-button LRI-button-small" : "LRI-button LRI-button-medium";
         return (
-            <button 
-                type={this.props.type || 'button'}
-                className={buttonClasses}
-                disabled={this.props.disabled || false}
-                onClick={this.handleClick}>{this.props.label || "Submit"}</button>
+            <div className="LRI-form-field">
+                <div className="LRI-form-field-content">
+                <button 
+                    type={this.props.type || 'button'}
+                    className={buttonClasses}
+                    disabled={this.props.disabled || false}
+                    onClick={this.handleClick}>{this.props.label || "Submit"}</button>
+                </div>
+            </div>
         );
     }
 }
