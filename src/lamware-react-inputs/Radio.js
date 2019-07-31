@@ -5,12 +5,17 @@ import { getHeaderMarkup, getErrorMarkup } from './helpers';
 class Radio extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {value: null};
+        this.state = {
+            value: null
+        };
         this.handleChange = this.handleChange.bind(this);
     }
     
-    handleChange(e) {
-        let value = e.target.value;
+    componentDidMount(){
+
+    }
+
+    handleChange(value) {
         this.setState({value});
 
         if(this.props._hasLRIForm){
@@ -22,37 +27,44 @@ class Radio extends React.Component {
     }
 
     getRadioMarkup() {
-        let markup = [];
-        this.props.options.forEach((o) => {
-            let value = '',  label = '';
-            if(typeof(o) === 'object'){
-                let valueKey = this.props.valueKey || 'pk';
-                let labelKey = this.props.labelKey || 'name';
-                value = o[valueKey];
-                label = o[labelKey];
+        return this.props.options.map((option, index) => {
+            let type = typeof(option);
+            if(type === 'object'){
+                let key = option[this.props.valueKey || 'pk'];
+                let label = option[this.props.labelKey || 'name'];
+                return (
+                    <div key={index} className="LRI-checkable-option">
+                        <input
+                            id={this.props.name + '-' + key}
+                            type="radio" 
+                            name={this.props.name}
+                            value={key}
+                            onChange={() => this.handleChange(key)} 
+                            disabled={this.props.disabled || false}
+                            checked={String(this.props.value) === String(key)} />
+                        <label htmlFor={this.props.name + '-' + key}><span className="LRI-radio">{label}</span></label>
+                    </div>
+                );
             }
-            else if(typeof(o) === 'string'){
-                value = label = o;
+            else if(['string', 'number', 'boolean'].includes(type)){
+                return (
+                    <div key={index} className="LRI-checkable-option">
+                        <input
+                            id={this.props.name + '-' + option}
+                            type="radio" 
+                            name={this.props.name}
+                            value={option}
+                            onChange={() => this.handleChange(option)} 
+                            disabled={this.props.disabled || false}
+                            checked={String(this.props.value) === String(option)} />
+                        <label htmlFor={this.props.name + '-' + option}><span className="LRI-radio">{option}</span></label>
+                    </div>
+                );
             }
-            else if(typeof(o) === 'number' || typeof(o) === 'boolean'){
-                value = label = o;
-                label = label.toString();
+            else{
+                return null;
             }
-            markup.push(
-                <div key={this.props.name + '-' + value} className="LRI-checkable-option">
-                    <input
-                        id={this.props.name + '-' + value}
-                        type="radio" 
-                        name={this.props.name}
-                        value={value}
-                        onChange={this.handleChange} 
-                        disabled={this.props.disabled || false}
-                        checked={String(this.props.value) === String(value)} />
-                    <label htmlFor={this.props.name + '-' + value}><span className="LRI-radio">{label}</span></label>
-                </div>
-            );
         });
-        return markup;
     }
 
     render() {
@@ -75,5 +87,5 @@ Radio.defaultProps = {
     _isLRIRadio: true
 };
 
-export default Radio
+export default Radio;
 

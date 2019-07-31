@@ -8,58 +8,21 @@ class Select extends React.Component {
         super(props);
         this.state = {
             displayList: false,
-            value: '',
-            localOptions: null
+            value: ''
         };
         this.handleChange = this.handleChange.bind(this);
         this.getListMarkup = this.getListMarkup.bind(this);
         this.onFocus = this.onFocus.bind(this);
         this.setOptionsBoxRef = this.setOptionsBoxRef.bind(this);
         this.handleClick = this.handleClick.bind(this);
-        this.createLocalOptions = this.createLocalOptions.bind(this);
     }
     
     componentDidMount() {        
         document.addEventListener('mousedown', this.handleClick);
-        this.createLocalOptions(this.props);
     }
 
     componentWillUnmount() {
         document.removeEventListener('mousedown', this.handleClick);
-    }
-
-    componentWillReceiveProps(nextProps) {
-        this.createLocalOptions(nextProps);
-    }
-
-    createLocalOptions(props) {
-        let localVal = this.state.value;
-        let localOptions = {};
-        if(props.value === null){
-            localVal = '';
-        }
-        props.options.forEach((o) => {
-            let value = '', label = '';
-            if(typeof(o) === 'object'){
-                let valueKey = this.props.valueKey || 'pk';
-                let labelKey = this.props.labelKey || 'name';
-                value = o[valueKey];
-                label = o[labelKey];
-            }
-            else if(typeof(o) === 'string'){
-                value = label = o;
-            }
-            else if(typeof(o) === 'number' || typeof(o) === 'boolean'){
-                value = label = o;
-                label = label.toString();
-            }
-            if(props.value && String(value) === String(props.value)){
-                localVal = label;
-            }
-            localOptions[value] = label;
-        });
-        this.setState({localOptions});
-        this.setState({value: localVal});
     }
 
     handleChange(e) {
@@ -88,15 +51,28 @@ class Select extends React.Component {
         if(!this.state.displayList){
             return;
         }
-        let optionsList = [];
         let optionClass = this.props.small ? 'LRI-select-option-small' : 'LRI-select-option-medium';
-        Object.keys(this.state.localOptions).forEach((k) => {
-            if(this.state.value === null || this.state.value.length === 0 || this.state.localOptions[k].toUpperCase().includes(this.state.value.toUpperCase())){
-                optionsList.push(
-                    <div key={k} className={optionClass} onClick={() => this.optionSelected(k, this.state.localOptions[k])}> 
-                        {this.state.localOptions[k]} 
+
+        let optionsList = this.props.options.map((option, index) => {
+            let type = typeof(option);
+            if(type === 'object'){
+                let key = option[this.props.valueKey || 'pk'];
+                let label = option[this.props.labelKey || 'name'];
+                return (
+                    <div key={index} className={optionClass} onClick={() => this.optionSelected(key, label)}> 
+                        {label} 
                     </div>
-                )
+                );
+            }
+            else if(['string', 'number', 'boolean'].includes(type)){
+                return (
+                    <div key={index} className={optionClass} onClick={() => this.optionSelected(option, option)}> 
+                        {option} 
+                    </div>
+                );
+            }
+            else{
+                return null;
             }
         });
         return (
@@ -114,8 +90,25 @@ class Select extends React.Component {
     handleClick(e){
         if (this.optionsBoxRef && !this.optionsBoxRef.contains(e.target)) {
             this.setState({displayList: false});
-            let val = this.props.value ? this.state.localOptions[this.props.value] : '';
-            this.setState({value: val});
+            let selectedOption = this.props.options.find((option) => {
+                let type = typeof(option);
+                if(type === 'object'){
+                    if(option[this.props.valueKey || 'pk'] === this.props.value){
+                        return option[this.props.valueKey || 'pk'];
+                    }
+                    else{
+                        return false;
+                    }
+                }
+                else if(['string', 'number', 'boolean'].includes(type)){
+                    return option === this.props.value;
+                }
+                else{
+                    return false;
+                }
+            });
+            
+            this.setState({value: selectedOption || ''});
         }
     }
 

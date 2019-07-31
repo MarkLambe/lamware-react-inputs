@@ -36,7 +36,6 @@ test('Radio displays (with form)', () => {
 test('Radio calls onChange (without form)', () => {
 
     const onInput = jest.fn();
-    const event = {target: {name: "my_radio", value: 4}};
 
     const wrapper = Enzyme.mount(
         <Radio 
@@ -47,14 +46,13 @@ test('Radio calls onChange (without form)', () => {
     );
     
     const p = wrapper.find('#my_radio-0');
-    p.simulate('change', event)
-    expect(onInput).toBeCalledWith('my_radio', 4);
+    p.simulate('change', 0)
+    expect(onInput).toBeCalledWith('my_radio', 0);
 });
 
 test('Radio calls onChange (with form)', () => {
 
     const onInput = jest.fn();
-    const event = {target: {name: "my_radio", value: 4}};
 
     const wrapper = Enzyme.mount(
         <Form>
@@ -67,6 +65,6 @@ test('Radio calls onChange (with form)', () => {
     );
     
     const p = wrapper.find('#my_radio-0');
-    p.simulate('change', event)
-    expect(onInput).toBeCalledWith('my_radio', 4);
+    p.simulate('change', 0)
+    expect(onInput).toBeCalledWith('my_radio', 0);
 });

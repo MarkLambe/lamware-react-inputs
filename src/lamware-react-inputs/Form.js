@@ -3,8 +3,10 @@ import './styles.css';
 import { Button } from './index';
 import { getLRIChildren } from './helpers'
 
-const required_validator = (value) => value && (typeof(value) !== 'string' || value.length > 0) ? [] : ['Value is required'];
-const options_validator = (value, options) =>  value && options.includes(value) ? [] : ['Invalid option'];
+const required_validator = (value) => value !== null && value !== undefined ? [] : ['Value is required'];
+const options_validator = (value, options) =>  {
+    return required_validator(value) && options.includes(value) ? [] : ['Invalid option']
+}
 
 class Form extends React.Component {
     constructor(props) {
@@ -44,7 +46,7 @@ class Form extends React.Component {
         if(child.props.required === true){
             rules.push(required_validator);
             if(child.props.options){
-                let options = child.props.options.map((o) => typeof(o) === 'string' ? o : String(o[child.props.valueKey || 'pk']));
+                let options = child.props.options.map((o) => o[child.props.valueKey || 'pk']);
                 let f = (v) => options_validator(v, options);
                 rules.push(f);
             }
@@ -168,6 +170,9 @@ class Form extends React.Component {
                             disabled={ (!this.isFormValid() && this.state.showErrors) || this.props.disabled}
                             small={this.props.small}
                             label={this.props.submitLabel || "Submit"}/>
+                            { !this.isFormValid() && this.state.showErrors &&
+                                <span className="LRI-form-field-error">Please correct the errors above.</span>
+                            }
                     </div>
                 </form>
             </div>
