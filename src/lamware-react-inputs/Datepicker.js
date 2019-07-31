@@ -1,7 +1,7 @@
 import React from 'react';
 import './styles.css';
 import Datepicker from 'react-datepicker';
-import { getValidationMarkup, getErrorMarkup } from './helpers';
+import { getHeaderMarkup, getErrorMarkup } from './helpers';
 
 
 class CustomDatepickerInput extends React.Component {
@@ -43,15 +43,9 @@ class LRIDatepicker extends React.Component {
     }
 
     render() {
-        let headerClass = "LRI-form-field-header ";
-        headerClass += this.props.small ? "LRI-form-field-header-small" : "LRI-form-field-header-medium";
-
-
         return (
             <div className="LRI-form-field">
-                <div className={headerClass}>
-                    {this.props.label}
-                </div>
+                { getHeaderMarkup(this.props) }
                 <div className="LRI-form-field-content">
                     <Datepicker
                         customInput={<CustomDatepickerInput />}
@@ -59,9 +53,6 @@ class LRIDatepicker extends React.Component {
                         selected={this.props.value}
                         onChange={this.handleChange}
                         disabled={this.props.disabled || false} />
-                </div>
-                <div className="LRI-form-field-emoji">
-                    { getValidationMarkup(this.props.showValidationMessages, this.props.errors) }
                 </div>
                 <div className="LRI-form-field-error">
                     { getErrorMarkup(this.props.showValidationMessages, this.props.errors) }
@@ -72,7 +63,8 @@ class LRIDatepicker extends React.Component {
 }
 
 LRIDatepicker.defaultProps = {
-    _isLRIElement: true
+    _isLRIElement: true,
+    _isLRIDatepicker: true
 };
 
 export default LRIDatepicker;

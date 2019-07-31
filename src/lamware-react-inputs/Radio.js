@@ -1,6 +1,6 @@
 import React from 'react';
 import './styles.css';
-import { getValidationMarkup, getErrorMarkup } from './helpers';
+import { getHeaderMarkup, getErrorMarkup } from './helpers';
 
 class Radio extends React.Component {
     constructor(props) {
@@ -56,19 +56,11 @@ class Radio extends React.Component {
     }
 
     render() {
-        let headerClass = "LRI-form-field-header ";
-        headerClass += this.props.small ? "LRI-form-field-header-small" : "LRI-form-field-header-medium";
-
         return (
             <div className="LRI-form-field">
-                <div className={headerClass}>
-                    { this.props.label }
-                </div>
+                { getHeaderMarkup(this.props) }
                 <div className="LRI-form-field-content LRI-checkable-section">
                     { this.getRadioMarkup() }
-                </div>
-                <div className="LRI-form-field-emoji">
-                    { getValidationMarkup(this.props.showValidationMessages, this.props.errors) }
                 </div>
                 <div className="LRI-form-field-error">
                     { getErrorMarkup(this.props.showValidationMessages, this.props.errors) }
@@ -79,7 +71,8 @@ class Radio extends React.Component {
 }
 
 Radio.defaultProps = {
-    _isLRIElement: true
+    _isLRIElement: true,
+    _isLRIRadio: true
 };
 
 export default Radio

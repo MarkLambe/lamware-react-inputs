@@ -1,22 +1,23 @@
 import React from 'react';
 
-export function getValidationMarkup(showValidationMessages, errors) {
-    if(!showValidationMessages || errors === undefined) return;
-    if(errors.length > 0){
-        return (
-            <span>
-                😕
-            </span>
-        )
+export function getHeaderMarkup(props){
+    let headerClass = props.small || props.description ? "LRI-form-field-header-small" : "LRI-form-field-header-medium";
+    let headerText = '';
+    
+    if(props.description){
+        headerText = props.description;
     }
-    else{
-        return (
-            <span>
-                👍🏻
-            </span>
-        )
+    else if((props.label && props.value && props.value.length > 0 && !props._isLRICheckbox) || 
+        (props._isLRIRadio || props._isLRIDatepicker)){
+        headerText = props.label;
     }
+    return (
+        <div className={headerClass}>
+            { headerText }
+        </div>
+    );
 }
+
 
 export function getErrorMarkup(showValidationMessages, errors) {
     if(!showValidationMessages || errors === undefined) return;

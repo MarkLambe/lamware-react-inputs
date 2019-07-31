@@ -8,6 +8,7 @@ Form classes
     --success-color: #00C781;
     --input-background-1:#ACACAC;
     --input-background-2: #EEE;
+    --header-text-color: #454545;
     --text-color: #333;
 }
 
@@ -18,7 +19,7 @@ Form classes
 
 .LRI-form-page-medium {
     margin: 0% 5%;
-    margin-bottom: 100px;
+    margin-bottom: 10px;
 }
 
 .LRI-form {
@@ -46,52 +47,34 @@ Form classes
     font-size: 250%;
 }
 
-.LRI-form-row {
-    width: 100%;
-    display: grid;
-    grid-gap: 0px;
-    grid-template-rows: auto;
-}
-
-
 /* The Field */
 .LRI-form-field {
     display: grid;
     grid-template-areas: 
-        "header header"
-        "input emoji"
-        "error error";
+        "header"
+        "input"
+        "error";
     grid-template-rows: auto 1fr auto;
     grid-template-columns: 1fr auto;
     grid-column-gap: 10px;
     grid-row-gap: 10px;
 }
 
-.LRI-form-field-header {
-    grid-area: header;
-    font-size: 120%;
-}
-
 .LRI-form-field-header-small {
+    grid-area: header;
+    color: var(--header-text-color);
     font-size: 100%;
 }
 
 .LRI-form-field-header-medium {
+    grid-area: header;
+    color: var(--header-text-color);
     font-size: 120%;
 }
 
 .LRI-form-field-content {
     position: relative;
     grid-area: input;
-}
-
-.LRI-form-field-emoji {
-    grid-area: emoji;
-    height: 100%;
-    display: flex;
-    align-items: flex-end;
-    justify-content: center;
-    font-size: 150%;
 }
 
 .LRI-form-field-error {

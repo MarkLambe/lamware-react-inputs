@@ -75,7 +75,7 @@ class Form extends React.Component {
         });
         return newPropKids.map((k, i) => {
             return (
-                <div key={i} className="LRI-form-row">
+                <div key={i}>
                     { k }
                 </div>
             );
@@ -162,11 +162,12 @@ class Form extends React.Component {
                     className={formClasses}
                     onSubmit={this.handleSubmit}>
                         { this.getChildren() }
-                    <div className="LRI-form-row">
+                    <div>
                         <Button 
                             type='submit' 
                             disabled={ (!this.isFormValid() && this.state.showErrors) || this.props.disabled}
-                            small={this.props.small}/>
+                            small={this.props.small}
+                            label={this.props.submitLabel || "Submit"}/>
                     </div>
                 </form>
             </div>

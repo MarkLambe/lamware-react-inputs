@@ -11,16 +11,16 @@ class App extends React.Component {
     super();
     this.state = {
         formData: {
-            text_input: {value: null, translation: 'Text Input'},
-            no_label_text_input: {value: null, translation: 'No Label Input'},
-            small_text_input: {value: null, translation: 'Small Input'},
-            text_input_with_validation: {value: null, translation: 'Text Input With Validation (Email)'},
-            select_from_strings: {value: null, translation: 'Select From Strings'},
-            select_from_objects: {value: null, translation: 'Select From Objects'},
-            radio_from_strings: {value: null, translation: 'Radio From Strings'},
-            radio_from_objects: {value: null, translation: 'Radio From Objects'},
-            checkbox: {value: null, translation: 'Checkbox'},
-            date: {value: null, translation: 'Datepicker'},
+            text_input: {value: null, translation: 'Name'},
+            no_label_text_input: {value: null, translation: 'Name'},
+            small_text_input: {value: null, translation: 'Name'},
+            text_input_with_validation: {value: null, translation: 'Email'},
+            select_from_strings: {value: null, translation: 'Select Thing'},
+            select_from_objects: {value: null, translation: 'Select Thing'},
+            radio_from_strings: {value: null, translation: 'Radio Things'},
+            radio_from_objects: {value: null, translation: 'Radio Things'},
+            checkbox: {value: null, translation: 'Check me'},
+            date: {value: null, translation: 'Date'},
         },
     };
 
@@ -104,27 +104,26 @@ class App extends React.Component {
         <div className="form-box">
           <Form title="Demo!" onSubmit={this.handleSubmit} onChange={this.handleInputChange}>
                 
-                <span>Basic input, labels appear above when user types</span>
-                <TextInput 
+                <TextInput
                   label={formData.text_input.translation}
                   name="text_input"
                   value={formData.text_input.value} />
 
-                <span>Same with no label (still has placeholder) takes up less space</span>
                 <TextInput 
+                  description="Same with no label (still has placeholder) takes up less space"
                   placeholder={formData.no_label_text_input.translation}
                   name="no_label_text_input"
                   value={formData.no_label_text_input.value} />
 
-                <span>Using the 'small' prop</span>
                 <TextInput 
+                  description="Using the 'small' prop"
                   label={formData.small_text_input.translation}
                   name="small_text_input"
                   value={formData.small_text_input.value}
                   small />
 
-                <span>Basic input with email regex (onsubmit)</span>
                 <TextInput 
+                  description="Basic input with email regex (onsubmit)"
                   label="Text Input With Validation"
                   name="text_input_with_validation"
                   value={formData.text_input_with_validation.value} 
@@ -162,6 +161,7 @@ class App extends React.Component {
                   required />
 
                 <Checkbox
+                  description="Conditionally render datepicker"
                   label={this.state.formData.checkbox.translation}
                   value={this.state.formData.checkbox.value}
                   name="checkbox" />
